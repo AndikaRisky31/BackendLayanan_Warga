@@ -4,7 +4,7 @@ const db = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'user_db'
+  database: 'layanan_warga'
 });
 
 const createTable = async () => {
