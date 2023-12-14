@@ -1,0 +1,13 @@
+###
+GET http://localhost:3000/articles
+
+
+###
+POST http://localhost:3000/articles
+Content-Type: application/json
+
+{
+    "name":"Surya Widjaya",
+    "email":"surya@gmail.com",
+    "address":"kota mataram"
+}
