@@ -18,3 +18,22 @@ export const getAdminKelurahanByKelurahan = async (req, res) => {
     });
   }
 };
+
+export const getAdminKelurahanById = async(req,res) =>{
+  try{
+    const{id} = req.body;
+    console.log('Received Admin Kelurahan By Id request - Request Body:', JSON.stringify(req.body));
+
+    const adminKelurahanData = await adminKelurahanModel.getAdminKelurahanById(id);
+  
+    res.json({
+      message: 'GET Admin Kelurahan success',
+      data: adminKelurahanData,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Server Error',
+      serverMessage: error.message || error,
+    });
+  }
+}

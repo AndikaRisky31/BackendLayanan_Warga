@@ -11,3 +11,13 @@ export const getAdminKelurahanByKelurahanId = async (kelurahan_id) => {
     throw error;
   }
 };
+
+export const getAdminKelurahanById = async(id)=>{
+  const query = "SELECT * FROM admin_kelurahan WHERE id = ?";
+  try {
+    const [rows] = await db.query(query, [id]);
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+}
