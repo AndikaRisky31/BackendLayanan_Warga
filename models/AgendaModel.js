@@ -1,4 +1,3 @@
-// AgendaModel.js
 import { db } from '../config/Database.js';
 
 export const getAgendaByKelurahan = async (kelurahan_id) => {

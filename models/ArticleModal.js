@@ -29,6 +29,16 @@ const deleteArticle = async (id) => {
 
   return db.execute(SQLQuery, [id]);
 };
+const getLatestArticles = async (limit) => {
+  const SQLQuery = `SELECT * FROM articles ORDER BY created_at DESC LIMIT ${limit}`;
+  return db.execute(SQLQuery);
+};
+
+const getArticlesByPage = async (page, pageSize) => {
+  const offset = (page - 1) * pageSize;
+  const SQLQuery = `SELECT * FROM articles ORDER BY created_at DESC LIMIT ${pageSize} OFFSET ${offset}`;
+  return db.execute(SQLQuery);
+};
 
 export {
   getArticles,
@@ -36,5 +46,7 @@ export {
   saveArticle,
   updateArticle,
   deleteArticle,
+  getLatestArticles,
+  getArticlesByPage,
 };
 
