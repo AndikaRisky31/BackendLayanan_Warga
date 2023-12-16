@@ -1,0 +1,153 @@
+CREATE TABLE `admin_kelurahan` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `kelurahan_id` int(10) UNSIGNED NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `pangkat` varchar(20) DEFAULT NULL,
+  `nomor` varchar(15) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `alamat` int(11) NOT NULL,
+  `imageURL` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `agenda` (
+  `agenda_id` int(10) UNSIGNED NOT NULL,
+  `kelurahan_id` int(10) UNSIGNED NOT NULL,
+  `judul` varchar(255) DEFAULT NULL,
+  `tanggal` datetime DEFAULT NULL,
+  `imageURL` varchar(255) NOT NULL,
+  `tempat` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `kelurahan` (
+  `kelurahan_id` int(10) UNSIGNED NOT NULL,
+  `nama_kelurahan` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `laporan` (
+  `laporan_ID` int(10) UNSIGNED NOT NULL,
+  `userGeneral_id` int(10) UNSIGNED NOT NULL,
+  `bukti_laporan` varchar(255) NOT NULL,
+  `lokasi_laporan` text NOT NULL,
+  `jenis_laporan` enum('Infrastruktur dan Lingkungan','Keamanan dan Ketertiban','Ekonomi','Kesehatan dan Layanan Kesehatan') NOT NULL,
+  `deskripsi` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `pengajuan` (
+  `pengajuan_id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `jenis_surat` enum('Surat Pengantar','Keterangan Tidak Mampu','Pembuatan Keluarga') NOT NULL,
+  `tanggal_pengajuan` datetime NOT NULL,
+  `proses` enum('%Terkirim','Diproses','Sudah Diproses','Selesai') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `perangkat_kelurahan` (
+  `perangkat_kelurahan_id` int(10) UNSIGNED NOT NULL,
+  `kelurahan_id` int(10) UNSIGNED NOT NULL,
+  `nama` varchar(40) NOT NULL,
+  `jabatan` varchar(40) DEFAULT NULL,
+  `no_hp` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `super_admin` (
+  `superadmin_id` int(10) UNSIGNED NOT NULL,
+  `username` varchar(45) NOT NULL,
+  `super_admin_password` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `usergeneral` (
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `kelurahan_id` int(10) UNSIGNED NOT NULL,
+  `username` varchar(40) DEFAULT NULL,
+  `password` varchar(20) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `nomor` varchar(15) DEFAULT NULL,
+  `alamat` text DEFAULT NULL,
+  `tempatLahir` text DEFAULT NULL,
+  `TanggalLahir` date DEFAULT NULL,
+  `imageURL` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE `admin_kelurahan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `admin_kelurahan_FKIndex1` (`kelurahan_id`);
+
+
+ALTER TABLE `agenda`
+  ADD PRIMARY KEY (`agenda_id`),
+  ADD KEY `agenda_FKIndex1` (`kelurahan_id`);
+
+
+ALTER TABLE `kelurahan`
+  ADD PRIMARY KEY (`kelurahan_id`);
+
+
+ALTER TABLE `laporan`
+  ADD PRIMARY KEY (`laporan_ID`),
+  ADD KEY `Laporan_FKIndex1` (`userGeneral_id`);
+
+
+ALTER TABLE `pengajuan`
+  ADD PRIMARY KEY (`pengajuan_id`),
+  ADD KEY `pengajuan_FKIndex1` (`user_id`);
+
+ALTER TABLE `perangkat_kelurahan`
+  ADD PRIMARY KEY (`perangkat_kelurahan_id`),
+  ADD KEY `perangkat_kelurahan_FKIndex1` (`kelurahan_id`);
+
+ALTER TABLE `super_admin`
+  ADD PRIMARY KEY (`superadmin_id`);
+
+ALTER TABLE `usergeneral`
+  ADD PRIMARY KEY (`user_id`),
+  ADD KEY `userGeneral_FKIndex1` (`kelurahan_id`);
+
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `admin_kelurahan`
+MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+ALTER TABLE `agenda`
+  MODIFY `agenda_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+ALTER TABLE `kelurahan`
+  MODIFY `kelurahan_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `laporan`
+  MODIFY `laporan_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `pengajuan`
+  MODIFY `pengajuan_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `perangkat_kelurahan`
+  MODIFY `perangkat_kelurahan_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `super_admin`
+  MODIFY `superadmin_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `usergeneral`
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `admin_kelurahan`
+  ADD CONSTRAINT `admin_kelurahan_ibfk_1` FOREIGN KEY (`kelurahan_id`) REFERENCES `kelurahan` (`kelurahan_id`) ON DELETE CASCADE;
+
+ALTER TABLE `agenda`
+  ADD CONSTRAINT `agenda_ibfk_1` FOREIGN KEY (`kelurahan_id`) REFERENCES `kelurahan` (`kelurahan_id`) ON DELETE CASCADE;
+
+ALTER TABLE `laporan`
+  ADD CONSTRAINT `laporan_ibfk_1` FOREIGN KEY (`userGeneral_id`) REFERENCES `usergeneral` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+
+ALTER TABLE `pengajuan`
+  ADD CONSTRAINT `pengajuan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usergeneral` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE `perangkat_kelurahan`
+  ADD CONSTRAINT `perangkat_kelurahan_ibfk_1` FOREIGN KEY (`kelurahan_id`) REFERENCES `kelurahan` (`kelurahan_id`) ON DELETE CASCADE;
+
+ALTER TABLE `usergeneral`
+  ADD CONSTRAINT `usergeneral_ibfk_1` FOREIGN KEY (`kelurahan_id`) REFERENCES `kelurahan` (`kelurahan_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+COMMIT;
