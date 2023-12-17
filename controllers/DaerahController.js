@@ -15,3 +15,36 @@ export const getAllProvinsi = async (req, res) => {
       });
     }
   };
+
+export const getKabupatenByIdProvinsi = async (req, res) => {
+try {
+    const { province_id } = req.params;
+    const data = await daerahModel.getKabupatenByIdProvinsi(p);
+
+    res.json({
+    message: 'GET kabupaten success',
+    data: data,
+    });
+} catch (error) {
+    res.status(500).json({
+    message: 'Server Error',
+    serverMessage: error.message || error,
+    });
+}
+};
+export const getKecamatanByIdKabupaten = async (req, res) => {
+    try {
+        const { regency_id } = req.params;
+        const data = await daerahModel.getKecamatanByIdKabupaten(regency_id);
+    
+        res.json({
+        message: 'GET kecamatan success',
+        data: data,
+        });
+    } catch (error) {
+        res.status(500).json({
+        message: 'Server Error',
+        serverMessage: error.message || error,
+        });
+    }
+    };
