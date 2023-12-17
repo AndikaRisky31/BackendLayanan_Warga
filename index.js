@@ -10,6 +10,7 @@ import agendaRoutes from './routes/agendaRoutes.js';
 import adminKelurahanRoutes from './routes/adminKelurahanRoutes.js';
 import pengajuanRoutes from './routes/pengajuanRoutes.js';
 import daerahRoutes from './routes/daerahRoutes.js';
+import laporanRoutes from './routes/laporanRoutes.js'
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -23,6 +24,7 @@ app.use(pengajuanRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/agenda', agendaRoutes);
 app.use(adminKelurahanRoutes);
+app.use(laporanRoutes);
 
 const startServer = async () => {
   try {
