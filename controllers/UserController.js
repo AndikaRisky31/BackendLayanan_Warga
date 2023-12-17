@@ -48,7 +48,7 @@ export const getAllUsers = async (req, res) => {
 export const updateUser = async (req, res) => {
   const { id } = req.params;
   const { body } = req;
-  console.log(body);
+  console.log('Received Admin Kelurahan request - Request Body:', JSON.stringify(body));
 
   try {
     await UserModel.updateUser(body, id);
@@ -73,10 +73,10 @@ export const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
     const [data] = await UserModel.getUserById(id);
-
+    console.log("menerima request by id",id)
     res.json({
       message: 'GET User By Id success',
-      data: data,
+      data: data[0],
     });
   } catch (error) {
     res.status(500).json({

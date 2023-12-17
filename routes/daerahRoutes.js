@@ -7,5 +7,6 @@ const router = express.Router();
 router.get('/provinsi/all', DaerahController.getAllProvinsi);
 router.get('/kabupaten/:province_id',DaerahController.getKabupatenByIdProvinsi)
 router.get('/kecamatan/:regency_id',DaerahController.getKecamatanByIdKabupaten)
+router.get('/kelurahan/:district_id',DaerahController.getKelurahanByIdKecamatan)
 
 export default router;

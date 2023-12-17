@@ -23,6 +23,7 @@ app.use(pengajuanRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/agenda', agendaRoutes);
 app.use(adminKelurahanRoutes);
+app.use('/api/daerah',daerahRoutes)
 
 const startServer = async () => {
   try {
