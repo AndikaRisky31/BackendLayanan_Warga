@@ -11,7 +11,7 @@ router.post('/api/users', upload.none(), UserController.createUser);
 router.get('/api/users', UserController.getAllUsers);
 router.get('/api/users/:id', UserController.getUserById);
 router.get('/api/users/kel_id/:kelurahan_id', UserController.getUserByKelurahan);
-router.patch('/api/users/:id', UserController.updateUser);
+router.patch('/api/users/:id', upload.none(), UserController.updateUser);
 router.delete('/api/users/:id', UserController.deleteUser);
 
 export default router;

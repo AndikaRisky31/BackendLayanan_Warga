@@ -3,10 +3,10 @@ import * as UserModel from '../models/UserModel.js';
 
 export const createUser = async (req, res) => {
   const { body } = req;
-  const {kelurahan_id, username, password, email, nomor, alamat, tempatLahir, TanggalLahir, imageURL} = req.body;
+  const {kelurahan_id, username, password, email, nomor, alamat, kota, imageURL} = req.body;
   console.log(req.body);
 
-  if(!(kelurahan_id && username && password && email && nomor && alamat && tempatLahir && TanggalLahir && imageURL)){
+  if(!(kelurahan_id && username && password && email && nomor && alamat && kota && imageURL)){
     return res.status(400).json({
       message: "format data yang anda masukkan salah!",
       data: body

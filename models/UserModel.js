@@ -2,8 +2,8 @@
 import { db } from '../config/Database.js';
 
 export const createUser = async (body) => {
-  const query = 'INSERT INTO user (kelurahan_id, username, password, email, nomor, alamat, tempatLahir, TanggalLahir, imageURL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
-  const values = [body.kelurahan_id, body.username, body.password, body.nomor, body.email, body.alamat, body.tempatLahir, body.TanggalLahir, body.imageURL];
+  const query = 'INSERT INTO user (kelurahan_id, username, password, email, nomor, alamat, kota, imageURL) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)';
+  const values = [body.kelurahan_id, body.username, body.password, body.email, body.nomor, body.alamat, body.kota, body.imageURL];
 
   return db.execute(query, values);
 };
@@ -19,7 +19,7 @@ export const getAllUsers = async () => {
 };
 
 export const updateUser = async (body, id) => {
-  const query = `UPDATE user SET kelurahan_id=?, username=?, password=?, email=?, nomor=?, alamat=?, tempatLahir=?, TanggalLahir=?, imageURL=? WHERE user_id=?`;
+  const query = `UPDATE user SET kelurahan_id=?, username=?, password=?, email=?, nomor=?, alamat=?, kota=?, imageURL=? WHERE user_id=?`;
   const values = [
     body.kelurahan_id,
     body.username,
@@ -27,8 +27,7 @@ export const updateUser = async (body, id) => {
     body.email,
     body.nomor,
     body.alamat,
-    body.tempatLahir,
-    body.TanggalLahir,
+    body.kota,
     body.imageURL,
     id,
   ];

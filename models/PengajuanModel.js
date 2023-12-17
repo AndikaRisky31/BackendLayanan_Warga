@@ -2,7 +2,8 @@ import { db } from "../config/Database.js";
 
 export const getAllPengajuan = async () => {
   try {
-    const [rows] = await db.query("SELECT * FROM pengajuan");
+    const [rows] = await db.query(`SELECT pengajuan_id, user_id, jenis_surat, DATE_FORMAT(tanggal_pengajuan, '%Y-%m-%d %H:%i:%s') AS formatted_tanggal, proses FROM pengajuan
+    `);
     return rows;
   } catch (err) {
     console.error("Terjadi kesalahan:", err);
