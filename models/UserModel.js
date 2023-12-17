@@ -1,15 +1,11 @@
 // UserModel.js
 import { db } from '../config/Database.js';
 
-export const createUser = async (username, password, email) => {
-  try {
-    const query = 'INSERT INTO user (username, userpassword, email) VALUES (?, ?, ?)';
-    const result = await db.query(query, [username, password, email]);
-    return result;
-  } catch (err) {
-    console.error('Terjadi kesalahan saat menambahkan data:', err);
-    throw err;
-  }
+export const createUser = async (body) => {
+  const query = 'INSERT INTO user (kelurahan_id, username, password, email, nomor, alamat, kota, imageURL) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)';
+  const values = [body.kelurahan_id, body.username, body.password, body.email, body.nomor, body.alamat, body.kota, body.imageURL];
+
+  return db.execute(query, values);
 };
 
 export const getAllUsers = async () => {
@@ -22,24 +18,42 @@ export const getAllUsers = async () => {
   }
 };
 
-export const updateUser = async (user_id, username, nomor, email, alamat, tempatLahir) => {
+export const updateUser = async (body, id) => {
+  const query = `UPDATE user SET kelurahan_id=?, username=?, password=?, email=?, nomor=?, alamat=?, kota=?, imageURL=? WHERE user_id=?`;
+  const values = [
+    body.kelurahan_id,
+    body.username,
+    body.password,
+    body.email,
+    body.nomor,
+    body.alamat,
+    body.kota,
+    body.imageURL,
+    id,
+  ];
+
+  return db.execute(query, values);
+};
+
+export const getUserById = async (id) => {
+  const query = `SELECT * FROM user WHERE user_id=?`;
+  return db.execute(query, [id]);
+};
+
+export const getUserByKelurahan = async (kel_id) => {
   try {
-    const query = 'UPDATE user SET username = ?, Nomor = ?, email = ?, alamat = ?, tempatLahir = ? WHERE user_id = ?';
-    const result = await db.query(query, [username, nomor, email, alamat, tempatLahir, user_id]);
-    return result;
-  } catch (err) {
-    console.error('Terjadi kesalahan saat mengupdate data:', err);
-    throw err;
+    const kelurahanId = kel_id || null;
+    const query = `SELECT * FROM user WHERE kelurahan_id=?`;
+    const [rows] = await db.execute(query, [kelurahanId]);
+
+    return rows; // Mengembalikan array objek
+  } catch (error) {
+    throw error;
   }
 };
 
-export const getUserById = async (user_id) => {
-  try {
-    const query = 'SELECT * FROM user WHERE user_id = ? LIMIT 1';
-    const [result] = await db.query(query, [Number(user_id)]);
-    return result[0];
-  } catch (err) {
-    console.error('Terjadi kesalahan saat mengambil data pengguna:', err);
-    throw err;
-  }
-};
+export const deleteUser = async (id) => {
+  const query = 'DELETE FROM user WHERE user_id=?';
+
+  return db.execute(query, [id]);
+}
