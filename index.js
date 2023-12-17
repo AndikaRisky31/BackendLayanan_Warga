@@ -2,12 +2,13 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import { createTable, db } from './config/Database.js'; // Adjust the path accordingly
+import { createTable } from './config/Database.js'; // Adjust the path accordingly
 import ArticleRoute from './routes/ArticleRoute.js';
 import userRoutes from './routes/userRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import agendaRoutes from './routes/agendaRoutes.js';
 import adminKelurahanRoutes from './routes/adminKelurahanRoutes.js';
+import pengajuanRoutes from './routes/pengajuanRoutes.js';
 import daerahRoutes from './routes/daerahRoutes.js';
 
 const PORT = process.env.PORT || 3000;
@@ -17,11 +18,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(ArticleRoute);
-app.use('/api/users', userRoutes);
+app.use(userRoutes);
+app.use(pengajuanRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/agenda', agendaRoutes);
-app.use('/api/admin', adminKelurahanRoutes);
-app.use('/api/daerah', daerahRoutes);
+app.use(adminKelurahanRoutes);
 
 const startServer = async () => {
   try {
