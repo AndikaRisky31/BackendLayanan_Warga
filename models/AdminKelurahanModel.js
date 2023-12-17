@@ -7,7 +7,7 @@ const getAdminKelurahanByKelurahan = async () => {
   return db.execute(query);
 };
 
-const getAdminKelurahanByKelurahanById = async (id) => {
+const getAdminKelurahanByKelurahanId = async (id) => {
   const query = `SELECT * FROM admin_kelurahan WHERE kelurahan_id=?`;
 
   return db.execute(query, [id]);
@@ -28,7 +28,20 @@ const createAdminKelurahanByKelurahan = async (body) => {
 // }
 
 const updateAdminKelurahanByKelurahan = async (body, id) => {
-  const query = 'UPDATE admin_kelurahan SET kelurahan_id = ?, nama = ?, password = ?, pangkat = ?, nomor = ?, email = ?, alamat = ?, imageURL = ? WHERE id = ?';
+  const query = `
+    UPDATE admin_kelurahan 
+    SET 
+      kelurahan_id = COALESCE(?, kelurahan_id),
+      nama = COALESCE(?, nama),
+      password = COALESCE(?, password),
+      pangkat = COALESCE(?, pangkat),
+      nomor = COALESCE(?, nomor),
+      email = COALESCE(?, email),
+      alamat = COALESCE(?, alamat),
+      imageURL = COALESCE(?, imageURL)
+    WHERE id = ?;
+  `;
+  
   const values = [
     body.kelurahan_id,
     body.nama,
@@ -38,11 +51,15 @@ const updateAdminKelurahanByKelurahan = async (body, id) => {
     body.email,
     body.alamat,
     body.imageURL,
-    id, // Parameter terakhir untuk WHERE id = ?
+    id,
   ];
 
-  return db.execute(query, values);
+  // Replace undefined with null in the values array
+  const sanitizedValues = values.map(value => (value !== undefined ? value : null));
+
+  return db.execute(query, sanitizedValues);
 };
+
 
 
 const deleteAdminKelurahanByKelurahan =  async (id) => {
@@ -56,8 +73,18 @@ const deleteAdminKelurahanByKelurahan =  async (id) => {
 
 export {
   getAdminKelurahanByKelurahan,
-  getAdminKelurahanByKelurahanById,
+  getAdminKelurahanByKelurahanId,
   createAdminKelurahanByKelurahan,
   updateAdminKelurahanByKelurahan,
   deleteAdminKelurahanByKelurahan,
 };
+
+export const getAdminKelurahanById = async(id)=>{
+  const query = "SELECT * FROM admin_kelurahan WHERE id = ?";
+  try {
+    const [rows] = await db.query(query, [id]);
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+}

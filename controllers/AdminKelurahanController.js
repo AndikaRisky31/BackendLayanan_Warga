@@ -18,10 +18,10 @@ const getAdminKelurahanByKelurahan = async (req, res) => {
   }
 };
 
-const getAdminKelurahanByKelurahanById = async (req, res) => {
+const getAdminKelurahanByKelurahanId = async (req, res) => {
   try {
     const { id } = req.params;
-    const [data] = await adminKelurahanModel.getAdminKelurahanByKelurahanById(id);
+    const [data] = await adminKelurahanModel.getAdminKelurahanByKelurahanId(id);
     console.log(data);
     // console.log('Received Admin Kelurahan request - Request Body:', JSON.stringify(kelurahan_id));
     // const adminKelurahanData = 
@@ -66,19 +66,19 @@ const createAdminKelurahanByKelurahan = async (req, res) => {
 
 const updateAdminKelurahanByKelurahan = async (req, res) => {
   const { id } = req.params;
-  const {body} = req;
-  console.log(body);
+  const { body } = req;
 
   try {
-    await adminKelurahanModel.getAdminKelurahanByKelurahanById(body, id);
-    console.log(body);
+    await adminKelurahanModel.updateAdminKelurahanByKelurahan(body, id);
 
     res.json({
       message: 'UPDATE Admin Kelurahan success',
       data: {
-        id: id,...body,
+        id,
+        ...body,
       },
     });
+    console.log(body);
   } catch (error) {
     res.status(500).json({
       message: 'Server Error',
@@ -87,27 +87,31 @@ const updateAdminKelurahanByKelurahan = async (req, res) => {
   }
 };
 
-const deleteAdminKelurahanByKelurahan = async (req, res) => {
- const { id } = req.params;
- try {
-  await adminKelurahanModel.deleteAdminKelurahanByKelurahan(id);
-  res.json({
-    message: 'DELETE Admin Kelurahan Success',
-    data: 'data yang dihapus dengan id ke : ' + id,
-  });
-  console.log(id);
- } catch (error) {
-  res.status(500).json({
-    message: 'Server Error',
-    serverMessage: error,
-  });
- }
-};
+const deleteAdminKelurahanByKelurahan = (req, res) => {
+  const { id } = req.params;
+
+  try {
+    adminKelurahanModel.deleteAdminKelurahanByKelurahan(id);
+
+    res.json({
+      message: 'DELETE Admin Kelurahan success',
+      data: {
+        id: id,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Server Error',
+      serverMessage: error.message || error,
+    });
+  }
+
+}
 
 export {
+  getAdminKelurahanByKelurahanId,
   getAdminKelurahanByKelurahan,
-  getAdminKelurahanByKelurahanById,
   createAdminKelurahanByKelurahan,
   updateAdminKelurahanByKelurahan,
   deleteAdminKelurahanByKelurahan
-};
+}

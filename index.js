@@ -9,6 +9,7 @@ import authRoutes from './routes/authRoutes.js';
 import agendaRoutes from './routes/agendaRoutes.js';
 import adminKelurahanRoutes from './routes/adminKelurahanRoutes.js';
 import pengajuanRoutes from './routes/pengajuanRoutes.js';
+import daerahRoutes from './routes/daerahRoutes.js';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
