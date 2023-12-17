@@ -4,10 +4,9 @@ export const getAllProvinsi = async (req, res) => {
     try {
       const data = await daerahModel.getAllProvinsi();
   
-      res.json({
-        message: 'GET all Provinsi success',
-        data: data,
-      });
+      res.json(
+        data
+      );
     } catch (error) {
       res.status(500).json({
         message: 'Server Error',
@@ -19,12 +18,9 @@ export const getAllProvinsi = async (req, res) => {
 export const getKabupatenByIdProvinsi = async (req, res) => {
 try {
     const { province_id } = req.params;
-    const data = await daerahModel.getKabupatenByIdProvinsi(p);
+    const data = await daerahModel.getKabupatenByIdProvinsi(province_id);
 
-    res.json({
-    message: 'GET kabupaten success',
-    data: data,
-    });
+    res.json(data);
 } catch (error) {
     res.status(500).json({
     message: 'Server Error',
@@ -37,10 +33,7 @@ export const getKecamatanByIdKabupaten = async (req, res) => {
         const { regency_id } = req.params;
         const data = await daerahModel.getKecamatanByIdKabupaten(regency_id);
     
-        res.json({
-        message: 'GET kecamatan success',
-        data: data,
-        });
+        res.json(data);
     } catch (error) {
         res.status(500).json({
         message: 'Server Error',
