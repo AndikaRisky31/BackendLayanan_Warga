@@ -8,6 +8,7 @@ import userRoutes from './routes/userRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import agendaRoutes from './routes/agendaRoutes.js';
 import adminKelurahanRoutes from './routes/adminKelurahanRoutes.js';
+import daerahRoutes from './routes/daerahRoutes.js';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -20,6 +21,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/agenda', agendaRoutes);
 app.use('/api/admin', adminKelurahanRoutes);
+app.use('/api/daerah', daerahRoutes);
 
 const startServer = async () => {
   try {
