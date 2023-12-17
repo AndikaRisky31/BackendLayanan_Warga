@@ -2,14 +2,23 @@
 import * as UserModel from '../models/UserModel.js';
 
 export const createUser = async (req, res) => {
-  try {
-    const { username, userpassword, email } = req.body;
-    const result = await UserModel.createUser(username, userpassword, email);
+  const { body } = req;
+  const {kelurahan_id, username, password, email, nomor, alamat, tempatLahir, TanggalLahir, imageURL} = req.body;
+  console.log(req.body);
 
-    res.json({
+  if(!(kelurahan_id && username && password && email && nomor && alamat && tempatLahir && TanggalLahir && imageURL)){
+    return res.status(400).json({
+      message: "format data yang anda masukkan salah!",
+      data: body
+    });
+  }
+
+  try {
+    await UserModel.createUser(body);
+    res.status(201).json({
       success: true,
       message: 'User created successfully',
-      data: result,
+      data: body,
     });
   } catch (error) {
     res.status(500).json({
@@ -23,7 +32,7 @@ export const createUser = async (req, res) => {
 export const getAllUsers = async (req, res) => {
   try {
     const data = await UserModel.getAllUsers();
-
+    console.log(data);
     res.json({
       message: 'GET all Users success',
       data: data,
@@ -37,47 +46,38 @@ export const getAllUsers = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  try {
-    const { user_id, username, nomor, email, alamat, tempatLahir } = req.body;
-    const result = await UserModel.updateUser(user_id, username, nomor, email, alamat, tempatLahir);
+  const { id } = req.params;
+  const { body } = req;
+  console.log(body);
 
-    if (result.affectedRows > 0) {
-      const fetchUpdatedUserDataQuery = await UserModel.getUserById(user_id);
-      res.json({
-        success: true,
-        message: 'User data successfully updated',
-        data: fetchUpdatedUserDataQuery,
-      });
-    } else {
-      res.json({
-        success: false,
-        message: 'User not found',
-      });
-    }
+  try {
+    await UserModel.updateUser(body, id);
+
+    res.json({
+      message: "Update User Success",
+      data: {
+        id: id,
+        ...body,
+      },
+    });
   } catch (error) {
     res.status(500).json({
-      success: false,
       message: 'Server Error',
-      serverMessage: error.message || error,
+      serverMessage: error,
     });
   }
 };
+
 
 export const getUserById = async (req, res) => {
   try {
-    const { user_id } = req.body;
-    const data = await UserModel.getUserById(user_id);
+    const { id } = req.params;
+    const [data] = await UserModel.getUserById(id);
 
-    if (data) {
-      res.json({
-        message: 'GET User by ID success',
-        data: data,
-      });
-    } else {
-      res.status(404).json({
-        message: 'User not found',
-      });
-    }
+    res.json({
+      message: 'GET User By Id success',
+      data: data,
+    });
   } catch (error) {
     res.status(500).json({
       message: 'Server Error',
@@ -85,3 +85,39 @@ export const getUserById = async (req, res) => {
     });
   }
 };
+
+export const getUserByKelurahan = async (req, res) => {
+  try {
+    const kelurahan_id = req.params.kelurahan_id;
+    const data = await UserModel.getUserByKelurahan(kelurahan_id);
+
+    res.json({
+      message: 'GET User By Kelurahan success',
+      data: data,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Server Error',
+      serverMessage: error.message || error,
+    });
+  }
+};
+
+export const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await UserModel.deleteUser(id);
+
+    res.json({
+      message: 'Delete User success',
+      data: {
+        id: id,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Server Error',
+      serverMessage: error.message || error,
+    });
+  }
+}

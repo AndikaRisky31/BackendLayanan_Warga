@@ -43,7 +43,7 @@ const createTable = async () => {
         pangkat VARCHAR(20) DEFAULT NULL,
         nomor VARCHAR(15) DEFAULT NULL,
         email VARCHAR(255) NOT NULL,
-        alamat INT(11) NOT NULL,
+        alamat VARCHAR(100) NOT NULL,
         imageURL VARCHAR(255) NOT NULL,
         PRIMARY KEY (id),
         KEY admin_kelurahan_FKIndex1 (kelurahan_id),
