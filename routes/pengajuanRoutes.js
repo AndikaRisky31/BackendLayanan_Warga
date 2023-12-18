@@ -7,7 +7,7 @@ const upload = multer();
 const router = express.Router();
 
 router.get('/api/pengajuan', PengajuanController.getAllPengajuan);
-router.post('/api/pengajuan', upload.none(), PengajuanController.createPengajuan);
+router.post('/api/pengajuan/create', upload.none(), PengajuanController.createPengajuan);
 router.get('/api/pengajuan/user/:user_id', PengajuanController.getPengajuanByUserId);
 router.patch('/api/pengajuan/pengantar/:pengajuan_id', upload.none(), PengajuanController.updateProsesSuratPengantar); 
 // router.patch('/api/pengajuan/keluarga/:pengajuan_id', PengajuanController.updateProsesSuratKeluarga);
