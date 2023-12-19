@@ -3,10 +3,9 @@ import * as AuthModel from '../models/AuthModel.js';
 
 export const loginUser = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    console.log('Received Login request - Request Body:', JSON.stringify(req.body));
+    const { email, password } = req.body;
 
-    const user = await AuthModel.getUserByUsername(username);
+    const user = await AuthModel.getUserByEmail(email);
 
     if (user) {
       // Periksa password secara sederhana (tidak aman)

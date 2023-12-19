@@ -29,8 +29,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/agenda', agendaRoutes);
 app.use(adminKelurahanRoutes);
 app.use(laporanRoutes);
-app.use(daerahRoutes)
-
+app.use('/api/daerah',daerahRoutes)
 
 const startServer = async () => {
   try {

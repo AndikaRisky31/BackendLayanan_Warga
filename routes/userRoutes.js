@@ -7,7 +7,7 @@ const upload = multer();
 const router = express.Router();
 
 // Endpoint untuk menambahkan data (insert)
-router.post('/api/users', upload.none(), UserController.createUser);
+router.post('/api/users/create', upload.none(), UserController.createUser);
 router.get('/api/users', UserController.getAllUsers);
 router.get('/api/users/:id', UserController.getUserById);
 router.get('/api/users/kel_id/:kelurahan_id', UserController.getUserByKelurahan);

@@ -7,11 +7,11 @@ const upload = multer();
 const router = express.Router();
 
 // Endpoint untuk menambahkan data (insert)
-router.get('/api/provinsi/all', DaerahController.getAllProvinsi);
-router.get('/api/kabupaten/:provinsi_id', DaerahController.getKabupatenByProvinsi);
-router.get('/api/kecamatan/:kabupaten_id', DaerahController.getKecamatanByKabupaten);
-router.get('/api/kabupaten/:kecamatan_id', DaerahController.getKelurahanByKecamatan);
-router.post('/api/kelurahan/', upload.none(), DaerahController.createKelurahan);
-router.get('/api/kelurahan/', DaerahController.getKelurahan);
+router.post('/kelurahan/', upload.none(), DaerahController.createKelurahan);
+router.get('/kelurahan/', DaerahController.getKelurahan);
+router.get('/provinsi/all', DaerahController.getAllProvinsi);
+router.get('/kabupaten/:province_id',DaerahController.getKabupatenByIdProvinsi)
+router.get('/kecamatan/:regency_id',DaerahController.getKecamatanByIdKabupaten)
+router.get('/kelurahan/:district_id',DaerahController.getKelurahanByIdKecamatan)
 
 export default router;
