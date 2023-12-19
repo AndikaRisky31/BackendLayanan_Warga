@@ -1,43 +1,39 @@
 import { db } from '../config/Database.js';
 
 const getArticles = async () => {
-  const SQLQuery = `SELECT * FROM users`;
+  const SQLQuery = `SELECT * FROM article`;
   return db.execute(SQLQuery);
 };
 
 const getArticleById = async (id) => {
-  const SQLQuery = `SELECT * FROM users WHERE id=?`;
+  const SQLQuery = `SELECT * FROM article WHERE article_id=?`;
   return db.execute(SQLQuery, [id]);
 };
 
-const saveArticle = async (body) => {
-  const SQLQuery = `INSERT INTO users (name, email, address) VALUES (?, ?, ?)`;
-  const values = [body.name, body.email, body.address];
+const saveArticle = async (body, fileName, url) => {
+  const SQLQuery = `INSERT INTO article (author, date, title, content, image, url) VALUES (?, ?, ?, ?, ?, ?)`;
+  const values = [body.author, body.date, body.title, body.content, fileName, url];
 
   return db.execute(SQLQuery, values);
 };
 
-const updateArticle = async (body, id) => {
-  const SQLQuery = 'UPDATE users SET name=?, email=?, address=? WHERE id=?';
-  const values = [];
+const updateArticle = async (body, fileName, url, id) => {
+  const SQLQuery = 'UPDATE article SET author=?, date=?, title=?, content=?, image=?, url=? WHERE article_id=?';
+  const values = [body.author, body.date, body.title, body.content, fileName, url];
 
-  return db.execute(SQLQuery, [body.name], [body.email], [body.address], [id]);
+  return db.execute(SQLQuery, [...values, id]);
 };
 
-const deleteArticle = async (id) => {
-  const SQLQuery = 'DELETE FROM users WHERE id=?';
-
+const getImage = async (id) => {
+  const SQLQuery = 'SELECT image FROM article WHERE article_id=?';
   return db.execute(SQLQuery, [id]);
 };
-const getLatestArticles = async (limit) => {
-  const SQLQuery = `SELECT * FROM articles ORDER BY created_at DESC LIMIT ${limit}`;
-  return db.execute(SQLQuery);
-};
 
-const getArticlesByPage = async (page, pageSize) => {
-  const offset = (page - 1) * pageSize;
-  const SQLQuery = `SELECT * FROM articles ORDER BY created_at DESC LIMIT ${pageSize} OFFSET ${offset}`;
-  return db.execute(SQLQuery);
+
+const deleteArticle = async (id) => {
+  const SQLQuery = 'DELETE FROM article WHERE article_id=?';
+
+  return db.execute(SQLQuery, [id]);
 };
 
 export {
@@ -46,7 +42,6 @@ export {
   saveArticle,
   updateArticle,
   deleteArticle,
-  getLatestArticles,
-  getArticlesByPage,
+  getImage,
 };
 
