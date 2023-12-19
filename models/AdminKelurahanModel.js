@@ -1,4 +1,4 @@
-// models/AdminKelurahanModel.js
+
 import { db } from '../config/Database.js';
 
 const getAdminKelurahanByKelurahan = async () => {
@@ -8,7 +8,7 @@ const getAdminKelurahanByKelurahan = async () => {
 };
 
 const getAdminKelurahanByKelurahanId = async (id) => {
-  const query = `SELECT * FROM admin_kelurahan WHERE kelurahan_id=?`;
+  const query = `SELECT * FROM admin_kelurahan WHERE id=?`;
 
   return db.execute(query, [id]);
 }
@@ -20,18 +20,11 @@ const createAdminKelurahanByKelurahan = async (body) => {
   return db.execute(query, values);
 };
 
-// const  updateAdminKelurahanByKelurahan = async (body, id) => {
-//   const query = 'UPDATE admin_kelurahan SET kelurahan_id = ?, nama = ?, password = ?, pangkat = ?, nomor = ?, email = ?, alamat = ?, imageURL = ? WHERE id = ?';
-//   const values = [];
-
-//   return db.execute(query, [body.kelurahan_id], [body.nama], [body.password], [body.pangkat], [body.nomor], [body.email], [body.alamat], [body.imageURL], [id]);
-// }
-
 const updateAdminKelurahanByKelurahan = async (body, id) => {
   const query = `
     UPDATE admin_kelurahan 
     SET 
-      kelurahan_id = COALESCE(?, kelurahan_id),
+      kelurahan_id = COALESCE(?, kelurahan_id), 
       nama = COALESCE(?, nama),
       password = COALESCE(?, password),
       pangkat = COALESCE(?, pangkat),
@@ -54,7 +47,6 @@ const updateAdminKelurahanByKelurahan = async (body, id) => {
     id,
   ];
 
-  // Replace undefined with null in the values array
   const sanitizedValues = values.map(value => (value !== undefined ? value : null));
 
   return db.execute(query, sanitizedValues);

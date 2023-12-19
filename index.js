@@ -11,12 +11,14 @@ import adminKelurahanRoutes from './routes/adminKelurahanRoutes.js';
 import pengajuanRoutes from './routes/pengajuanRoutes.js';
 import daerahRoutes from './routes/daerahRoutes.js';
 import laporanRoutes from './routes/laporanRoutes.js'
-import multer from 'multer';
+import fileUpload from 'express-fileupload';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload());
+app.use(express.static("public"));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(ArticleRoute);
@@ -26,30 +28,12 @@ app.use(authRoutes);
 app.use(agendaRoutes);
 app.use(adminKelurahanRoutes);
 app.use(laporanRoutes);
-app.use(daerahRoutes);
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/images');
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname);
-  }
-});
-
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 5 * 1000 * 1000 // 5 MB
-  }
-});
-
+app.use(daerahRoutes)
 
 const startServer = async () => {
   try {
     await createTable();
 
-    // Kode tambahan setelah koneksi database berhasil
     console.log('Database terhubung dan tabel berhasil dibuat.');
 
     app.listen(PORT, () => {

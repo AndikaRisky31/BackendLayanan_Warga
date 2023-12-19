@@ -2,10 +2,9 @@
 import * as UserModel from '../models/UserModel.js';
 
 export const createUser = async (req, res) => {
-  const { body, file } = req; // Dapatkan file yang diunggah dari req
-  const { kelurahan_id, username, password, email, nomor, alamat, kota, imageURL } = body;
-
-  if (!(kelurahan_id && username && password && email && nomor && alamat && kota && imageURL)) {
+  const { body } = req;
+  const {kelurahan_id, username, password, email, nomor, alamat, kota} = req.body;
+  if(!(kelurahan_id && username && password && email && nomor && alamat && kota)){
     return res.status(400).json({
       message: "Format data yang anda masukkan salah!",
       data: body,
@@ -53,7 +52,7 @@ export const getAllUsers = async (req, res) => {
 export const updateUser = async (req, res) => {
   const { id } = req.params;
   const { body } = req;
-  console.log(body);
+  console.log('Received Admin Kelurahan request - Request Body:', JSON.stringify(body));
 
   try {
     await UserModel.updateUser(body, id);
@@ -78,10 +77,10 @@ export const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
     const [data] = await UserModel.getUserById(id);
-
+    console.log("menerima request by id",id)
     res.json({
       message: 'GET User By Id success',
-      data: data,
+      data: data[0],
     });
   } catch (error) {
     res.status(500).json({

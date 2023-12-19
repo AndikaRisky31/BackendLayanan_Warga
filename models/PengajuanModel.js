@@ -11,12 +11,24 @@ export const getAllPengajuan = async () => {
   }
 };
 
-export const createPengajuan = async (body) => {
-    const query = 'INSERT INTO pengajuan (user_id, jenis_surat, tanggal_pengajuan, proses) VALUES (?, ?, ?, ?)';
-    const values = [body.user_id, body.jenis_surat, body.tanggal_pengajuan, body.proses];
-    
-    return db.execute(query, values);
+export const createPengajuan = async (body, fileKTPPath, fileKKPath) => {
+  // Mendapatkan waktu saat ini sebagai string format SQL
+  const currentDateTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  const proses = "Terkirim"
+
+  const query = "INSERT INTO pengajuan (user_id,nama_lengkap,no_nik,agama,status,alamat, jenis_surat, tanggal_pengajuan, proses, file_ktp, file_kk) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+  const values = [body.user_id,body.namaLengkap,body.noNik,body.agama,body.status,body.alamat, body.jenisSurat, currentDateTime,proses, fileKTPPath, fileKKPath];
+
+  try {
+    const [result] = await db.execute(query, values);
+    console.log('Pengajuan saved to database');
+    return result;
+  } catch (error) {
+    console.error('Error saving pengajuan to database:', error);
+    throw error;
+  }
 };
+
 
 export const getPengajuanByUserId = async (user_id) => {
   try {

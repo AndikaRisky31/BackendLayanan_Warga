@@ -17,29 +17,16 @@ export const getAllPengajuan = async (req, res) => {
 };
 
 export const createPengajuan = async (req, res) => {
-  const { body } = req;
-  const { user_id, jenis_surat, tanggal_pengajuan, proses } = req.body;
-  console.log(req.body);
-  if (!(user_id && jenis_surat && tanggal_pengajuan && proses)) {
-    res.status(400).json({
-      message: "Bad Request",
-      serverMessage: "Data tidak lengkap",
-    });
-  }
-
   try {
-    await PengajuanModel.createPengajuan(body);
-    res.status(201).json({
-      success: true,
-      message: "Pengajuan created successfully",
-      data: body,
-    });
+    const fileKTPPath = req.files.fileKTP[0].path;
+    const fileKKPath = req.files.fileKK[0].path;
+    console.log(req.body)
+
+    await PengajuanModel.createPengajuan(req.body, fileKTPPath, fileKKPath);
+    return res.status(200).json({ message: 'Pengajuan berhasil dibuat.' });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Server Error",
-      serverMessage: error.message || error,
-    });
+    console.error(error);
+    return res.status(500).json({ message: 'Terjadi kesalahan saat membuat pengajuan.' });
   }
 };
 
