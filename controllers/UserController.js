@@ -2,25 +2,30 @@
 import * as UserModel from '../models/UserModel.js';
 
 export const createUser = async (req, res) => {
-  const { body } = req;
-  const {kelurahan_id, username, password, email, nomor, alamat, kota, imageURL} = req.body;
-  console.log(req.body);
+  const { body, file } = req; // Dapatkan file yang diunggah dari req
+  const { kelurahan_id, username, password, email, nomor, alamat, kota, imageURL } = body;
 
-  if(!(kelurahan_id && username && password && email && nomor && alamat && kota && imageURL)){
+  if (!(kelurahan_id && username && password && email && nomor && alamat && kota && imageURL)) {
     return res.status(400).json({
-      message: "format data yang anda masukkan salah!",
-      data: body
+      message: "Format data yang anda masukkan salah!",
+      data: body,
     });
   }
 
   try {
-    await UserModel.createUser(body);
+    // Sertakan req dan res sebagai parameter
+    await createUserModel(body, req, res);
+
+    // Dapatkan path file yang diunggah jika ada, atau gunakan imageURL dari body
+    const uploadedImagePath = file ? file.path : imageURL;
+
     res.status(201).json({
       success: true,
       message: 'User created successfully',
-      data: body,
+      data: { ...body, imageURL: uploadedImagePath },
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({
       success: false,
       message: 'Server Error',

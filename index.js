@@ -11,6 +11,7 @@ import adminKelurahanRoutes from './routes/adminKelurahanRoutes.js';
 import pengajuanRoutes from './routes/pengajuanRoutes.js';
 import daerahRoutes from './routes/daerahRoutes.js';
 import laporanRoutes from './routes/laporanRoutes.js'
+import multer from 'multer';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -26,6 +27,23 @@ app.use(agendaRoutes);
 app.use(adminKelurahanRoutes);
 app.use(laporanRoutes);
 app.use(daerahRoutes);
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/images');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1000 * 1000 // 5 MB
+  }
+});
+
 
 const startServer = async () => {
   try {
