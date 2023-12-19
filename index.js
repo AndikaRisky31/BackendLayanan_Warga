@@ -12,7 +12,6 @@ import pengajuanRoutes from './routes/pengajuanRoutes.js';
 import daerahRoutes from './routes/daerahRoutes.js';
 import laporanRoutes from './routes/laporanRoutes.js'
 import fileUpload from 'express-fileupload';
-import busboy from 'cone'
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -22,7 +21,7 @@ app.use(fileUpload());
 app.use(express.static("public"));
 app.use(cors());
 app.use(bodyParser.json());
-app.use(ArticleRoute);
+app.use('/api',ArticleRoute);
 app.use(userRoutes);
 app.use(pengajuanRoutes);
 app.use('/api/auth', authRoutes);

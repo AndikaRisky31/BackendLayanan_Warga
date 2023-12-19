@@ -43,3 +43,13 @@ export const getKelurahanByIdKecamatan = async (district_id) => {
       throw error;
   }
   };
+export const createKelurahan = async (district_id,nama) => {
+  const query = 'INSERT INTO kelurahan (district_id,name) VALUES(?,?) ';
+  
+  try {
+      const [rows] = await db.query(query,[district_id,nama]);
+      return rows;
+  } catch (error) {
+      throw error;
+  }
+  };

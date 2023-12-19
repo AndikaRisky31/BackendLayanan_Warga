@@ -54,3 +54,15 @@ export const getKelurahanByIdKecamatan = async(req,res)=>{
         });
     }
 };
+export const createKelurahan = async(req,res)=>{
+  try {
+    const { district_id,name } = req.body;
+    const data = await daerahModel.createKelurahan(district_id,name);
+    res.json(data);
+  } catch (error) {
+      res.status(500).json({
+      message: 'Server Error',
+      serverMessage: error.message || error,
+      });
+  }
+}
