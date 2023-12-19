@@ -41,3 +41,16 @@ export const getKecamatanByIdKabupaten = async (req, res) => {
         });
     }
     };
+
+export const getKelurahanByIdKecamatan = async(req,res)=>{
+    try {
+      const { district_id } = req.params;
+      const data = await daerahModel.getKelurahanByIdKecamatan(district_id);
+      res.json(data);
+    } catch (error) {
+        res.status(500).json({
+        message: 'Server Error',
+        serverMessage: error.message || error,
+        });
+    }
+};
