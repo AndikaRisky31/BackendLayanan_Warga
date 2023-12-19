@@ -3,12 +3,10 @@ import * as ArticleController from '../controllers/ArticleController.js';
 
 const router = express.Router();
 
-router.get('/articles', ArticleController.getArticles);
-router.get('/articles/:id', ArticleController.getArticleById);
-router.post('/articles', ArticleController.saveArticle);
-router.patch('/articles/:id', ArticleController.updateArticle);
-router.delete('/articles/:id', ArticleController.deleteArticle);
-router.post('/latest', ArticleController.getLatestArticles);
-router.post('/page', ArticleController.getArticlesByPage);
+router.get('/api/articles', ArticleController.getArticles);
+router.get('/api/articles/:id', ArticleController.getArticleById);
+router.post('/api/articles', ArticleController.saveArticle);
+router.patch('/api/articles/:id', ArticleController.updateArticle);
+router.delete('/api/articles/:id', ArticleController.deleteArticle);
 
 export default router;

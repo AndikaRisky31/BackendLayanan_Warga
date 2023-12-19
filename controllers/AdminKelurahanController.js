@@ -3,8 +3,6 @@ import * as adminKelurahanModel from '../models/AdminKelurahanModel.js';
 const getAdminKelurahanByKelurahan = async (req, res) => {
   try {
     const [data] = await adminKelurahanModel.getAdminKelurahanByKelurahan();
-    // console.log('Received Admin Kelurahan request - Request Body:', JSON.stringify(kelurahan_id));
-    // const adminKelurahanData = 
 
     res.json({
       message: 'GET All Admin Kelurahan success',
@@ -23,8 +21,6 @@ const getAdminKelurahanByKelurahanId = async (req, res) => {
     const { id } = req.params;
     const [data] = await adminKelurahanModel.getAdminKelurahanByKelurahanId(id);
     console.log(data);
-    // console.log('Received Admin Kelurahan request - Request Body:', JSON.stringify(kelurahan_id));
-    // const adminKelurahanData = 
 
     res.json({
       message: 'GET Admin Kelurahan success By Id',

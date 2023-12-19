@@ -50,8 +50,7 @@ export const getUserByKelurahan = async (kel_id) => {
     const kelurahanId = kel_id || null;
     const query = `SELECT * FROM user WHERE kelurahan_id=?`;
     const [rows] = await db.execute(query, [kelurahanId]);
-
-    return rows; // Mengembalikan array objek
+    return rows;
   } catch (error) {
     throw error;
   }

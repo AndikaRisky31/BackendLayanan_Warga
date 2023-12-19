@@ -167,6 +167,21 @@ await connection.query(createPengajuanTableQuery);
 console.log('pengajuan table created (if not exists)');
 
 
+    const createArticleTableQuery = `
+      CREATE TABLE IF NOT EXISTS article (
+        article_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+        author varchar(40) DEFAULT NULL,
+        date varchar(20) DEFAULT NULL,
+        title varchar(225) DEFAULT NULL,
+        content text DEFAULT NULL,
+        image varchar(225) DEFAULT NULL,
+        url VARCHAR(100) DEFAULT NULL,
+        PRIMARY KEY (article_id)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    `;
+    await connection.query(createArticleTableQuery);
+    console.log('article table created (if not exists)');
+
 
   } catch (err) {
     throw err;
