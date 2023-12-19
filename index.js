@@ -1,4 +1,5 @@
-import 'dotenv/config';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -10,34 +11,58 @@ import agendaRoutes from './routes/agendaRoutes.js';
 import adminKelurahanRoutes from './routes/adminKelurahanRoutes.js';
 import pengajuanRoutes from './routes/pengajuanRoutes.js';
 import daerahRoutes from './routes/daerahRoutes.js';
-import laporanRoutes from './routes/laporanRoutes.js'
-import fileUpload from 'express-fileupload';
+import laporanRoutes from './routes/laporanRoutes.js';
+import multiparty from 'connect-multiparty';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-app.use(express.urlencoded({ extended: true }));
-app.use(fileUpload());
-app.use(express.static("public"));
+// Middleware for handling file uploads with connect-multiparty
+const uploadMiddleware = multiparty({
+  uploadDir: './public/images', // Set the directory where uploaded files will be saved
+  maxFilesSize: 10 * 1024 * 1024, // Set the maximum file size (in bytes) - here, it's set to 10 MB
+});
+
+// Middleware for allowing CORS
 app.use(cors());
+
+// Middleware for parsing JSON bodies
 app.use(bodyParser.json());
-app.use('/api',ArticleRoute);
+
+// Middleware for parsing URL-encoded bodies
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Serving static files from the 'public' directory
+app.use(express.static("public"));
+
+// Custom middleware (you might need to define/uploadMiddleware)
+app.use(uploadMiddleware);
+
+// Serving static files from the '/public' path
+app.use('/public', express.static(__dirname + '/public'));
+
+// Routes
+app.use('/api', ArticleRoute);
 app.use(userRoutes);
 app.use(pengajuanRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/agenda', agendaRoutes);
 app.use(adminKelurahanRoutes);
 app.use(laporanRoutes);
-app.use('/api/daerah',daerahRoutes)
+app.use('/api/daerah', daerahRoutes);
 
 const startServer = async () => {
   try {
+    // Ensure database table is created before starting the server
     await createTable();
 
-    console.log('Database terhubung dan tabel berhasil dibuat.');
+    console.log('Database connected, and tables successfully created.');
 
     app.listen(PORT, () => {
-      console.log(`Server berhasil di running di port ${PORT}`);
+      console.log(`Server is running on port ${PORT}`);
     });
   } catch (error) {
     console.error('Error starting the server:', error);

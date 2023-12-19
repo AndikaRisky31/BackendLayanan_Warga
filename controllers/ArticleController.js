@@ -204,12 +204,16 @@ async function getImageResult(id) {
 }
 const getLatestArticles = async (req, res) => {
   try {
-    const { size } = req.body;
-    const latestArticles = await ArticleModel.getLatestArticles(size);
-    res.json(latestArticles);
+    const{size}= req.body
+    const [data] = await ArticleModel.getLatestArticles(size);
+
+
+    res.json(data);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({
+      message: 'Server Error',
+      serverMessage: error,
+    });
   }
 };
 
@@ -223,8 +227,6 @@ const getArticlesByPage = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
-
 
 export {
   getArticles,

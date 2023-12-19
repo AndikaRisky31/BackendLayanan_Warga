@@ -30,9 +30,13 @@ export const checkEmail = async (req, res) => {
     const existingUser = await AuthModel.getUserByEmail(email);
 
     if (existingUser) {
-      res.status(409).json({ message: 'Email sudah terdaftar' });
+      res.status(200).json({ 
+        status : false,
+        message: 'Email sudah terdaftar' });
     } else {
-      res.status(200).json({ message: 'Email tersedia' });
+      res.status(200).json({
+         status:true,
+         message: 'Email tersedia' });
     }
   } catch (error) {
     console.error('Terjadi kesalahan:', error);

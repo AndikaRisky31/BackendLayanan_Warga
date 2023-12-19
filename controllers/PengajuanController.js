@@ -18,15 +18,18 @@ export const getAllPengajuan = async (req, res) => {
 
 export const createPengajuan = async (req, res) => {
   try {
-    const fileKTPPath = req.files.fileKTP[0].path;
-    const fileKKPath = req.files.fileKK[0].path;
-    console.log(req.body)
+    const { body, files } = req;
+    console.log('Received login request - Request Body:', JSON.stringify(req.body));
+    const fileKTPPath = files.fileKTP.path;
+    const fileKKPath = files.fileKK.path;
 
-    await PengajuanModel.createPengajuan(req.body, fileKTPPath, fileKKPath);
-    return res.status(200).json({ message: 'Pengajuan berhasil dibuat.' });
+    // Call the function in the model to save the pengajuan
+    const result = await PengajuanModel.createPengajuan(body, fileKTPPath, fileKKPath);
+
+    res.status(201).json({ message: 'Pengajuan created successfully', result });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Terjadi kesalahan saat membuat pengajuan.' });
+    console.error('Error creating pengajuan:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
