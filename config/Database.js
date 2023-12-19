@@ -144,19 +144,28 @@ const createTable = async () => {
     console.log('laporan table created (if not exists)');
 
     const createPengajuanTableQuery = `
-    CREATE TABLE IF NOT EXISTS pengajuan (
-      pengajuan_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-      user_id int(10) UNSIGNED NOT NULL,
-      jenis_surat enum('Surat Pengantar','Keterangan Tidak Mampu','Pembuatan Keluarga') NOT NULL,
-      tanggal_pengajuan TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-      proses enum('Terkirim','Diproses','Sudah Diproses','Selesai') NOT NULL,
-      PRIMARY KEY (pengajuan_id),
-      KEY pengajuan_FKIndex1 (user_id),
-      CONSTRAINT pengajuan_FKIndex1 FOREIGN KEY (user_id) REFERENCES user (user_id)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-    `;
-    await connection.query(createPengajuanTableQuery);
-    console.log('pengajuan table created (if not exists)');
+  CREATE TABLE IF NOT EXISTS pengajuan (
+    pengajuan_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    user_id int(10) UNSIGNED NOT NULL,
+    jenis_surat enum('Surat Pengantar','Keterangan Tidak Mampu','Pembuatan Keluarga') NOT NULL,
+    tanggal_pengajuan datetime NOT NULL,
+    proses enum('Terkirim','Diproses','Sudah Diproses','Selesai') NOT NULL,
+    file_ktp varchar(255) NOT NULL,
+    file_kk varchar(255) NOT NULL,
+    nama_lengkap varchar(50) NOT NULL,
+    no_nik varchar(16) NOT NULL,
+    agama enum('Islam','Kristen','Khatolik','Hindu','Budha') NOT NULL,
+    alamat varchar(255) NOT NULL,
+    status varchar(50) NOT NULL,
+    PRIMARY KEY (pengajuan_id),
+    KEY pengajuan_FKIndex1 (user_id),
+    CONSTRAINT pengajuan_FKIndex1 FOREIGN KEY (user_id) REFERENCES user (user_id)
+  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+`;
+
+await connection.query(createPengajuanTableQuery);
+console.log('pengajuan table created (if not exists)');
+
 
 
   } catch (err) {
