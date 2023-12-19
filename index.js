@@ -21,10 +21,11 @@ app.use(bodyParser.json());
 app.use(ArticleRoute);
 app.use(userRoutes);
 app.use(pengajuanRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/agenda', agendaRoutes);
+app.use(authRoutes);
+app.use(agendaRoutes);
 app.use(adminKelurahanRoutes);
 app.use(laporanRoutes);
+app.use(daerahRoutes);
 
 const startServer = async () => {
   try {

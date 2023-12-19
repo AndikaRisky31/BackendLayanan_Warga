@@ -121,3 +121,22 @@ export const deleteUser = async (req, res) => {
     });
   }
 }
+
+const users = [
+  { id: 1, username: 'user1', password: 'password1' },
+  { id: 2, username: 'user2', password: 'password2' },
+  // ... tambahkan data pengguna lain jika diperlukan
+];
+
+export const verifyCredentials = async (username, password) => {
+  // Temukan pengguna dengan username yang sesuai
+  const user = users.find((user) => user.username === username);
+
+  // Jika pengguna tidak ditemukan atau password tidak sesuai, kembalikan null
+  if (!user || user.password !== password) {
+    return null;
+  }
+
+  // Jika username dan password sesuai, kembalikan userId
+  return user.id;
+};
