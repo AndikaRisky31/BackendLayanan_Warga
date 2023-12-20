@@ -1,8 +1,9 @@
 import { db } from "../config/Database.js";
 
-export const createLaporan = async (body) => {
-    const query = `INSERT INTO laporan (user_id, bukti_laporan, lokasi_laporan, jenis_laporan, deskripsi) VALUES (?, ?, ?, ?, ?)`;
-    const values = [body.user_id, body.bukti_laporan, body.lokasi_laporan, body.jenis_laporan, body.deskripsi];
+export const createLaporan = async (body,fileLaporPath) => {
+  const currentDateTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    const query = `INSERT INTO laporan (user_id, bukti_laporan, lokasi_laporan, jenis_laporan, deskripsi,waktu) VALUES (?, ?, ?, ?, ?,?)`;
+    const values = [body.user_id, fileLaporPath, body.lokasi_laporan, body.jenis_laporan, body.deskripsi,currentDateTime];
     
     return db.execute(query, values);
 };

@@ -1,31 +1,32 @@
 import * as LaporanModel from "../models/LaporanModel.js";
 
 export const createLaporan = async (req, res) => {
-  const { body } = req;
-  const { user_id, bukti_laporan, lokasi_laporan, jenis_laporan, deskripsi } =
-    req.body;
-
-  if (
-    !(user_id && bukti_laporan && lokasi_laporan && jenis_laporan && deskripsi)
-  ) {
-    res.status(400).json({
-      message: "Bad Request",
-      serverMessage: "Data tidak lengkap",
-    });
-    console.log(req.body);
-  }
-
   try {
-    await LaporanModel.createLaporan(body);
+    const { body, files } = req;
+    console.log('Received report request - Request Body:', JSON.stringify(req.body));
+    
+    const { user_id, lokasi_laporan, jenis_laporan, deskripsi } = body;
+    const fileLaporPath = files.bukti.path; // Adjust the key if needed
+
+    if (!(user_id && fileLaporPath && lokasi_laporan && jenis_laporan && deskripsi)) {
+      return res.status(400).json({
+        message: "Bad Request",
+        serverMessage: "Incomplete data",
+      });
+    }
+
+    const result = await LaporanModel.createLaporan(body, fileLaporPath);
+
     res.status(201).json({
       success: true,
-      message: "Laporan created successfully",
-      data: body,
+      message: 'Laporan created successfully',
+      result
     });
   } catch (error) {
+    console.error('Error creating laporan:', error);
     res.status(500).json({
       success: false,
-      message: "Server Error",
+      message: 'Server Error',
       serverMessage: error.message || error,
     });
   }
