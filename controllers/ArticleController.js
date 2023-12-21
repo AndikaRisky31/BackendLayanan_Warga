@@ -202,8 +202,31 @@ async function getImageResult(id) {
     throw error;
   }
 }
+const getLatestArticles = async (req, res) => {
+  try {
+    const{size}= req.body
+    const [data] = await ArticleModel.getLatestArticles(size);
 
 
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({
+      message: 'Server Error',
+      serverMessage: error,
+    });
+  }
+};
+
+const getArticlesByPage = async (req, res) => {
+  try {
+    const { page, pageSize } = req.body;
+    const articles = await ArticleModel.getArticlesByPage(page, pageSize);
+    res.json(articles);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 export {
   getArticles,
@@ -211,4 +234,6 @@ export {
   saveArticle,
   updateArticle,
   deleteArticle,
+  getLatestArticles,
+  getArticlesByPage
 };

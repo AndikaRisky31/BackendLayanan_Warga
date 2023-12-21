@@ -12,10 +12,8 @@ export const getAllPengajuan = async () => {
 };
 
 export const createPengajuan = async (body, fileKTPPath, fileKKPath) => {
-  // Mendapatkan waktu saat ini sebagai string format SQL
   const currentDateTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
   const proses = "Terkirim"
-
   const query = "INSERT INTO pengajuan (user_id,nama_lengkap,no_nik,agama,status,alamat, jenis_surat, tanggal_pengajuan, proses, file_ktp, file_kk) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
   const values = [body.user_id,body.namaLengkap,body.noNik,body.agama,body.status,body.alamat, body.jenisSurat, currentDateTime,proses, fileKTPPath, fileKKPath];
 

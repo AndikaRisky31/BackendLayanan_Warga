@@ -132,6 +132,7 @@ const createTable = async () => {
       user_id int(10) UNSIGNED NOT NULL,
       bukti_laporan varchar(255) NOT NULL,
       lokasi_laporan text NOT NULL,
+      waktu datetime NOT NULL,
       jenis_laporan enum('Infrastruktur dan Lingkungan','Keamanan dan Ketertiban','Ekonomi','Kesehatan dan Layanan Kesehatan') NOT NULL,
       deskripsi text DEFAULT NULL,
       PRIMARY KEY (laporan_ID),

@@ -8,7 +8,7 @@ const getAdminKelurahanByKelurahan = async () => {
 };
 
 const getAdminKelurahanByKelurahanId = async (id) => {
-  const query = `SELECT * FROM admin_kelurahan WHERE id=?`;
+  const query = `SELECT * FROM admin_kelurahan WHERE kelurahan_id=?`;
 
   return db.execute(query, [id]);
 }
@@ -74,7 +74,7 @@ export {
 export const getAdminKelurahanById = async(id)=>{
   const query = "SELECT * FROM admin_kelurahan WHERE id = ?";
   try {
-    const [rows] = await db.query(query, [id]);
+    const rows = await db.query(query, [id]);
     return rows;
   } catch (error) {
     throw error;

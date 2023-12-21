@@ -11,8 +11,9 @@ const getArticleById = async (id) => {
 };
 
 const saveArticle = async (body, fileName, url) => {
+  const currentDateTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
   const SQLQuery = `INSERT INTO article (author, date, title, content, image, url) VALUES (?, ?, ?, ?, ?, ?)`;
-  const values = [body.author, body.date, body.title, body.content, fileName, url];
+  const values = [body.author, currentDateTime, body.title, body.content, fileName, url];
 
   return db.execute(SQLQuery, values);
 };
@@ -36,6 +37,17 @@ const deleteArticle = async (id) => {
   return db.execute(SQLQuery, [id]);
 };
 
+const getLatestArticles = async (limit) => {
+  const SQLQuery = `SELECT * FROM article ORDER BY date DESC LIMIT ${limit}`;
+  return db.execute(SQLQuery);
+};
+
+const getArticlesByPage = async (page, pageSize) => {
+  const offset = (page - 1) * pageSize;
+  const SQLQuery = `SELECT * FROM article ORDER BY date DESC LIMIT ${pageSize} OFFSET ${offset}`;
+  return db.execute(SQLQuery);
+};
+
 export {
   getArticles,
   getArticleById,
@@ -43,5 +55,6 @@ export {
   updateArticle,
   deleteArticle,
   getImage,
+  getLatestArticles,
+  getArticlesByPage
 };
-

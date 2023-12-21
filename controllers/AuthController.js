@@ -22,3 +22,24 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: 'Terjadi kesalahan server' });
   }
 };
+
+export const checkEmail = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const existingUser = await AuthModel.getUserByEmail(email);
+
+    if (existingUser) {
+      res.status(200).json({ 
+        status : false,
+        message: 'Email sudah terdaftar' });
+    } else {
+      res.status(200).json({
+         status:true,
+         message: 'Email tersedia' });
+    }
+  } catch (error) {
+    console.error('Terjadi kesalahan:', error);
+    res.status(500).json({ message: 'Terjadi kesalahan server' });
+  }
+};

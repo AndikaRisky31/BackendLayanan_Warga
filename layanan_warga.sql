@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2023 at 10:43 AM
+-- Generation Time: Dec 20, 2023 at 12:13 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -53,6 +53,35 @@ CREATE TABLE `agenda` (
   `imageURL` varchar(255) NOT NULL,
   `tempat` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `article`
+--
+
+CREATE TABLE `article` (
+  `article_id` int(10) UNSIGNED NOT NULL,
+  `author` varchar(40) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `title` varchar(225) DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  `image` varchar(225) DEFAULT NULL,
+  `url` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `article`
+--
+
+INSERT INTO `article` (`article_id`, `author`, `date`, `title`, `content`, `image`, `url`) VALUES
+(18, 'andikaaa', '2023-12-19 10:02:51', 'halooo', 'ajkfhajkhfjkawef', '1702980171746_07b70acc9cffe449023666a3540e66f4.png', 'http://localhost:3000/imagesArticle/1702980171746_07b70acc9cffe449023666a3540e66f4.png'),
+(19, 'andikaaa', '2023-12-19 11:42:21', 'halooo', 'ajkfhajkhfjkawef', '1702986141329_07b70acc9cffe449023666a3540e66f4.png', 'http://localhost:3000/imagesArticle/1702986141329_07b70acc9cffe449023666a3540e66f4.png'),
+(20, 'andikaaa', '2023-12-19 11:42:23', 'halooo', 'ajkfhajkhfjkawef', '1702986143646_07b70acc9cffe449023666a3540e66f4.png', 'http://localhost:3000/imagesArticle/1702986143646_07b70acc9cffe449023666a3540e66f4.png'),
+(21, 'andikaaa', '2023-12-19 11:42:25', 'halooo', 'ajkfhajkhfjkawef', '1702986145079_07b70acc9cffe449023666a3540e66f4.png', 'http://localhost:3000/imagesArticle/1702986145079_07b70acc9cffe449023666a3540e66f4.png'),
+(22, 'andikaaa', '2023-12-19 11:42:27', 'halooo', 'ajkfhajkhfjkawef', '1702986147116_07b70acc9cffe449023666a3540e66f4.png', 'http://localhost:3000/imagesArticle/1702986147116_07b70acc9cffe449023666a3540e66f4.png'),
+(23, 'andikaaa', '2023-12-19 11:42:27', 'halooo', 'ajkfhajkhfjkawef', '1702986147937_07b70acc9cffe449023666a3540e66f4.png', 'http://localhost:3000/imagesArticle/1702986147937_07b70acc9cffe449023666a3540e66f4.png'),
+(24, 'andi', '2023-12-19 11:42:32', 'halooo', 'ajkfhajkhfjkawef', '1702986152753_07b70acc9cffe449023666a3540e66f4.png', 'http://localhost:3000/imagesArticle/1702986152753_07b70acc9cffe449023666a3540e66f4.png');
 
 -- --------------------------------------------------------
 
@@ -7840,7 +7869,9 @@ CREATE TABLE `kelurahan` (
 --
 
 INSERT INTO `kelurahan` (`id`, `district_id`, `name`) VALUES
-(1, '3316110', 'Karangtalun');
+(1, '3316110', 'Karangtalun'),
+(2, '1101010', 'bajoooooo'),
+(3, '3316110', 'Sembongin');
 
 -- --------------------------------------------------------
 
@@ -7854,7 +7885,8 @@ CREATE TABLE `laporan` (
   `bukti_laporan` varchar(255) NOT NULL,
   `lokasi_laporan` text NOT NULL,
   `jenis_laporan` enum('Infrastruktur dan Lingkungan','Keamanan dan Ketertiban','Ekonomi','Kesehatan dan Layanan Kesehatan') NOT NULL,
-  `deskripsi` text DEFAULT NULL
+  `deskripsi` text DEFAULT NULL,
+  `waktu` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -7866,9 +7898,16 @@ CREATE TABLE `laporan` (
 CREATE TABLE `pengajuan` (
   `pengajuan_id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
-  `jenis_surat` enum('Surat Pengantar','Keterangan Tidak Mampu','Pembuatan Keluarga') NOT NULL,
+  `jenis_surat` enum('Surat Pengantar','Surat Keterangan Tidak Mampu','Surat Pembuatan Kartu Keluarga') NOT NULL,
   `tanggal_pengajuan` datetime NOT NULL,
-  `proses` enum('Terkirim','Diproses','Sudah Diproses','Selesai') NOT NULL
+  `proses` enum('Terkirim','Diproses','Sudah Diproses','Selesai') NOT NULL,
+  `file_ktp` varchar(255) NOT NULL,
+  `file_kk` varchar(255) NOT NULL,
+  `nama_lengkap` varchar(50) NOT NULL,
+  `no_nik` varchar(16) NOT NULL,
+  `agama` enum('Islam','Kristen','Katholik','Hindu','Budha','Khonghucu') NOT NULL,
+  `alamat` varchar(255) NOT NULL,
+  `status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -7948,8 +7987,7 @@ CREATE TABLE `user` (
   `email` varchar(45) DEFAULT NULL,
   `nomor` varchar(15) DEFAULT NULL,
   `alamat` text DEFAULT NULL,
-  `tempatLahir` text DEFAULT NULL,
-  `TanggalLahir` date DEFAULT NULL,
+  `kota` varchar(100) DEFAULT NULL,
   `imageURL` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -7970,6 +8008,12 @@ ALTER TABLE `admin_kelurahan`
 ALTER TABLE `agenda`
   ADD PRIMARY KEY (`agenda_id`),
   ADD KEY `kelurahan_id_indexx` (`kelurahan_id`);
+
+--
+-- Indexes for table `article`
+--
+ALTER TABLE `article`
+  ADD PRIMARY KEY (`article_id`);
 
 --
 -- Indexes for table `kabupaten`
@@ -8042,22 +8086,28 @@ ALTER TABLE `agenda`
   MODIFY `agenda_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `article`
+--
+ALTER TABLE `article`
+  MODIFY `article_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
 -- AUTO_INCREMENT for table `kelurahan`
 --
 ALTER TABLE `kelurahan`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `laporan`
 --
 ALTER TABLE `laporan`
-  MODIFY `laporan_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `laporan_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pengajuan`
 --
 ALTER TABLE `pengajuan`
-  MODIFY `pengajuan_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `pengajuan_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `super_admin`
@@ -8069,7 +8119,7 @@ ALTER TABLE `super_admin`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
