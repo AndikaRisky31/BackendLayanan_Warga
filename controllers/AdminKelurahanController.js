@@ -1,8 +1,23 @@
 import * as adminKelurahanModel from '../models/AdminKelurahanModel.js';
 
+const getAdminKelurahanById = async (req, res) => {
+  try {
+    const [data] = await adminKelurahanModel.getAdminKelurahanById();
+
+    res.json({
+      message: 'GET Admin Kelurahan success',
+      data: data,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Server Error',
+      serverMessage: error.message || error,
+    });
+  }
+};
 const getAdminKelurahanByKelurahan = async (req, res) => {
   try {
-    const [data] = await adminKelurahanModel.getAdminKelurahanByKelurahan();
+    const data = await adminKelurahanModel.getAdminKelurahanByKelurahan();
 
     res.json({
       message: 'GET All Admin Kelurahan success',
@@ -107,6 +122,7 @@ const deleteAdminKelurahanByKelurahan = (req, res) => {
 export {
   getAdminKelurahanByKelurahanId,
   getAdminKelurahanByKelurahan,
+  getAdminKelurahanById,
   createAdminKelurahanByKelurahan,
   updateAdminKelurahanByKelurahan,
   deleteAdminKelurahanByKelurahan
