@@ -7,7 +7,7 @@ const upload = multer();
 
 const router = express.Router();
 
-router.post('/api/laporan', LaporanController.createLaporan);
+router.post('/api/laporan', upload.none(), LaporanController.createLaporan);
 router.get('/api/laporan', LaporanController.getAllLaporan);
 router.get('/api/Laporan/user/:user_id', LaporanController.getLaporanByUserId);
 router.get('/api/laporan/ekonomi', LaporanController.getEkonomiLaporan);
