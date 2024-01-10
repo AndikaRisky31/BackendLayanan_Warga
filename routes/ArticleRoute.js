@@ -5,10 +5,10 @@ const router = express.Router();
 
 router.get('/articles', ArticleController.getArticles);
 router.get('/articles/:id', ArticleController.getArticleById);
-router.post('/articles', ArticleController.saveArticle);
-router.patch('/articles/:id', ArticleController.updateArticle);
+router.post('/articles', upload.none(), ArticleController.saveArticle);
+router.patch('/articles/:id', upload.none(), ArticleController.updateArticle);
 router.delete('/articles/:id', ArticleController.deleteArticle);
-router.post('/latest', ArticleController.getLatestArticles);
-router.post('/page', ArticleController.getArticlesByPage);
+router.post('/latest', upload.none(), ArticleController.getLatestArticles);
+router.post('/page', upload.none(), ArticleController.getArticlesByPage);
 
 export default router;

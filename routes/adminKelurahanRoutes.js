@@ -6,7 +6,7 @@ const upload = multer();
 
 const router = express.Router();
 
-router.post('/api/admin', adminKelurahanController.createAdminKelurahanByKelurahan);
+router.post('/api/admin', upload.none(), adminKelurahanController.createAdminKelurahanByKelurahan);
 router.get('/api/admin', adminKelurahanController.getAdminKelurahanByKelurahan);
 router.get('/api/admin/:id', upload.none(), adminKelurahanController.getAdminKelurahanByKelurahanId);
 router.patch('/api/admin/:id', adminKelurahanController.updateAdminKelurahanByKelurahan);

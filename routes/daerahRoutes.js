@@ -7,7 +7,7 @@ const upload = multer();
 const router = express.Router();
 
 
-router.post('/kelurahan/create', DaerahController.createKelurahan);
+router.post('/kelurahan/create', upload.none(), DaerahController.createKelurahan);
 router.delete('/kelurahan/delete/:id', DaerahController.deleteKelurahan);
 router.get('/kelurahan/all', DaerahController.getAllKelurahan);
 router.get('/provinsi/all', DaerahController.getAllProvinsi);
