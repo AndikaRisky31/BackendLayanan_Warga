@@ -13,7 +13,7 @@ import daerahRoutes from './routes/daerahRoutes.js';
 import laporanRoutes from './routes/laporanRoutes.js'
 import fileUpload from 'express-fileupload';
 
-const PORT = 8080;
+var PORT = 8080;
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -30,8 +30,8 @@ app.use(adminKelurahanRoutes);
 app.use(laporanRoutes);
 app.use('/api/daerah',daerahRoutes)
 
-app.use('/home', (req, res) => {
-  res.send('Home');
+app.get('/', (req, res) => {
+  res.send('API Works!!');
 })
 
 const startServer = async () => {
