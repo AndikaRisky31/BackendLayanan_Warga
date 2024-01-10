@@ -1,17 +1,18 @@
-import mysql from 'mysql2/promise';
+import mysql from "mysql2/promise";
 
 const db = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
+  host: 'layangdb.mysql.database.azure.com',
+  user: 'layangadmin',
+  password: '(.Root.)',
+  database: 'tes_warga',
 });
 
 const createTable = async () => {
-  const connection = await db.getConnection();
+  let connection;
 
   try {
-    console.log('Connected to MySQL database');
+    connection = await db.getConnection();
+    console.log("Connected to MySQL database");
 
     const createSuperAdminTable = `
     CREATE TABLE IF NOT EXISTS super_admin (
@@ -22,7 +23,7 @@ const createTable = async () => {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `;
     await connection.query(createSuperAdminTable);
-    console.log('super_admin table created (if not exists)');
+    console.log("super_admin table created (if not exists)");
 
     const createProvinsiTableQuery = `
     CREATE TABLE IF NOT EXISTS provinsi (
@@ -32,7 +33,7 @@ const createTable = async () => {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `;
     await connection.query(createProvinsiTableQuery);
-    console.log('Provinsi table created (if not exists)');
+    console.log("Provinsi table created (if not exists)");
 
     const createKabupatenTableQuery = `
     CREATE TABLE IF NOT EXISTS kabupaten (
@@ -45,7 +46,7 @@ const createTable = async () => {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `;
     await connection.query(createKabupatenTableQuery);
-    console.log('kabupaten table created (if not exists)');
+    console.log("kabupaten table created (if not exists)");
 
     const createKecamatanTableQuery = `
         CREATE TABLE IF NOT EXISTS kecamatan (
@@ -57,7 +58,7 @@ const createTable = async () => {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `;
     await connection.query(createKecamatanTableQuery);
-    console.log('kecamatan table created (if not exists)');
+    console.log("kecamatan table created (if not exists)");
 
     const createKelurahanTableQuery = `
     CREATE TABLE IF NOT EXISTS kelurahan (
@@ -70,7 +71,7 @@ const createTable = async () => {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `;
     await connection.query(createKelurahanTableQuery);
-    console.log('kelurahan table created (if not exists)');
+    console.log("kelurahan table created (if not exists)");
 
     const createAdminKelurahanTable = `
     CREATE TABLE IF NOT EXISTS admin_kelurahan (
@@ -89,7 +90,7 @@ const createTable = async () => {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `;
     await connection.query(createAdminKelurahanTable);
-    console.log('admin_kelurahan table created (if not exists)');
+    console.log("admin_kelurahan table created (if not exists)");
 
     const createAgendaTable = `
     CREATE TABLE IF NOT EXISTS agenda (
@@ -105,8 +106,8 @@ const createTable = async () => {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `;
     await connection.query(createAgendaTable);
-    console.log('agenda table created (if not exists)');
-    
+    console.log("agenda table created (if not exists)");
+
     const createUserTableQuery = `
     CREATE TABLE IF NOT EXISTS user (
       user_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -124,7 +125,7 @@ const createTable = async () => {
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `;
     await connection.query(createUserTableQuery);
-    console.log('user table created (if not exists)');
+    console.log("user table created (if not exists)");
 
     const createLaporanTableQuery = `
     CREATE TABLE IF NOT EXISTS laporan (
@@ -141,7 +142,7 @@ const createTable = async () => {
     `;
 
     await connection.query(createLaporanTableQuery);
-    console.log('laporan table created (if not exists)');
+    console.log("laporan table created (if not exists)");
 
     const createPengajuanTableQuery = `
   CREATE TABLE IF NOT EXISTS pengajuan (
@@ -163,9 +164,8 @@ const createTable = async () => {
   ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 `;
 
-await connection.query(createPengajuanTableQuery);
-console.log('pengajuan table created (if not exists)');
-
+    await connection.query(createPengajuanTableQuery);
+    console.log("pengajuan table created (if not exists)");
 
     const createArticleTableQuery = `
       CREATE TABLE IF NOT EXISTS article (
@@ -180,15 +180,16 @@ console.log('pengajuan table created (if not exists)');
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
     `;
     await connection.query(createArticleTableQuery);
-    console.log('article table created (if not exists)');
-
-
+    console.log("article table created (if not exists)");
+    console.log("All tables created (if not exists)");
   } catch (err) {
+    console.error("Error during table creation:", err);
     throw err;
   } finally {
-    // Release the connection
-    connection.release();
-    console.log('Connection released');
+    if (connection) {
+      connection.release();
+      console.log("Connection released");
+    }
   }
 };
 

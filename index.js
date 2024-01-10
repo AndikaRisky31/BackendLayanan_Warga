@@ -13,7 +13,7 @@ import daerahRoutes from './routes/daerahRoutes.js';
 import laporanRoutes from './routes/laporanRoutes.js'
 import fileUpload from 'express-fileupload';
 
-const PORT = process.env.PORT;
+const PORT = 8080;
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
