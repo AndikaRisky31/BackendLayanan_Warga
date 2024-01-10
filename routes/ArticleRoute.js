@@ -1,5 +1,8 @@
 import express from 'express';
 import * as ArticleController from '../controllers/ArticleController.js';
+import multer from 'multer';
+
+const upload = multer();
 
 const router = express.Router();
 
