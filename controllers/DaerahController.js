@@ -4,9 +4,10 @@ export const getAllProvinsi = async (req, res) => {
     try {
       const data = await daerahModel.getAllProvinsi();
   
-      res.json(
-        data
-      );
+      res.json({
+        message: 'GET all Provinsi success',
+        data: data,
+      });
     } catch (error) {
       res.status(500).json({
         message: 'Server Error',
@@ -71,9 +72,10 @@ export const getAllKelurahan = async (req, res) => {
   try {
     const data = await daerahModel.getAllKelurahan();
 
-    res.json(
-      data
-    );
+    res.json({
+            message: 'GET all Kelurahan success',
+      data: data,
+  });
   } catch (error) {
     res.status(500).json({
       message: 'Server Error',
