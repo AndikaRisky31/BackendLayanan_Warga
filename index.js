@@ -2,7 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import { createTable } from './config/Database.js'; // Adjust the path accordingly
+// import { createTable } from './config/Database.js'; // Adjust the path accordingly
 import ArticleRoute from './routes/ArticleRoute.js';
 import userRoutes from './routes/userRoutes.js';
 import authRoutes from './routes/authRoutes.js';
@@ -36,7 +36,6 @@ app.get('/', (req, res) => {
 
 const startServer = async () => {
   try {
-    await createTable();
 
     console.log('Database terhubung dan tabel berhasil dibuat.');
 

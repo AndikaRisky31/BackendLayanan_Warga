@@ -2,7 +2,7 @@
 import { db } from '../config/Database.js';
 
 export const createUser = async (body) => {
-  const query = 'INSERT INTO user (kelurahan_id, username, password, email, nomor, alamat, kota) VALUES (?, ?, ?, ?, ?, ?, ?)';
+  const query = `INSERT INTO user (kelurahan_id, username, password, email, nomor, alamat, kota) VALUES (?, ?, ?, ?, ?, ?, ?)`;
   const values = [body.kelurahan_id, body.username, body.password, body.email, body.nomor, body.alamat, body.kota];
   try {
     const result = await db.execute(query, values);
