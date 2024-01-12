@@ -36,7 +36,6 @@ app.get('/', (req, res) => {
 
 const startServer = async () => {
   try {
-
     console.log('Database terhubung dan tabel berhasil dibuat.');
 
     app.listen(PORT, () => {
