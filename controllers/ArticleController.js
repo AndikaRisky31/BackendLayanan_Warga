@@ -48,7 +48,7 @@ const saveArticle = async (req, res) => {
     const fileSize = file.data.length;
     const ext = path.extname(file.name);
     const fileName = `${Date.now()}_${file.md5}${ext}`;
-    const url = `https://layangapi-cc9d2c2831dc.herokuapp.com/imagesArticle/${fileName}`;
+    const url = `https://layangapi-cc9d2c2831dc.herokuapp.com/public/imagesArticle/${fileName}`;
     const allowedTypes = ['.png', '.jpg', '.jpeg'];
 
     if (!allowedTypes.includes(ext.toLowerCase())) {
