@@ -1,9 +1,9 @@
 import mysql from "mysql2/promise";
 
 // const db = mysql.createPool({
-//   host: 'layangdb.mysql.database.azure.com',
-//   user: 'layangadmin',
-//   password: '(.Root.)',
+//   host: 'localhost',
+//   user: 'root',
+//   password: '',
 //   database: 'tes_warga',
 // });
 

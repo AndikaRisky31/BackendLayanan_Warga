@@ -13,7 +13,7 @@ import daerahRoutes from './routes/daerahRoutes.js';
 import laporanRoutes from './routes/laporanRoutes.js'
 import fileUpload from 'express-fileupload';
 
-var PORT =   process.env.PORT || 3000;
+var PORT =   process.env.PORT || 3001;
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -37,7 +37,6 @@ app.get('/', (req, res) => {
 const startServer = async () => {
   try {
     console.log('Database terhubung dan tabel berhasil dibuat.');
-
     app.listen(PORT, () => {
       console.log(`Server berhasil di running di port ${PORT}`);
     });
