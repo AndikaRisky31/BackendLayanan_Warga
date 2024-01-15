@@ -52,7 +52,7 @@ const saveArticle = async (req, res) => {
     const fileSize = file.data.length;
     const ext = path.extname(file.name);
     const fileName = `${Date.now()}_${file.md5}${ext}`;
-    const blobServiceClient = BlobServiceClient.fromConnectionString("BlobEndpoint=https://imagelayang.blob.core.windows.net/;QueueEndpoint=https://imagelayang.queue.core.windows.net/;FileEndpoint=https://imagelayang.file.core.windows.net/;TableEndpoint=https://imagelayang.table.core.windows.net/;SharedAccessSignature=sv=2022-11-02&ss=bf&srt=sco&sp=rwdlaciytfx&se=2025-01-15T23:27:49Z&st=2024-01-15T15:27:49Z&spr=https,http&sig=LVYWHugcdlyVNX1X7KQgIjhS86KjDVD1Ebc6F5vyUlY%3D");
+    const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
     const containerClient = blobServiceClient.getContainerClient(CONTAINER_NAME);
     const blockBlobClient = containerClient.getBlockBlobClient(fileName);
 
