@@ -81,18 +81,21 @@ const saveArticle = async (req, res) => {
         data: body,
       });
     } catch (error) {
+      console.error("Error in ArticleModel.saveArticle:", error);
       res.status(500).json({
         message: 'Server Error',
-        serverMessage: error,
+        serverMessage: error.message || error,
       });
     }
   } catch (error) {
+    console.error("Error in saveArticle:", error);
     res.status(500).json({
       message: 'Server Error',
       serverMessage: error.message || error,
     });
   }
 };
+
 
 const updateArticle = async (req, res) => {
   const { id } = req.params;
