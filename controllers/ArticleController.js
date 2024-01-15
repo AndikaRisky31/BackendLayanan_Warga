@@ -66,14 +66,13 @@ const saveArticle = async (req, res) => {
       return res.status(422).json({ msg: 'Ukuran maksimal gambar hanya 5 MB' });
     }
 
-    // Gunakan buffer untuk membuat stream
     const stream = Buffer.from(file.data);
-    const uploadOptions = { bufferSize: 4 * 1024 * 1024, maxBuffers: 20 };
 
-    console.log("Starting uploadStream...");
-    await blockBlobClient.uploadStream(stream, uploadOptions.bufferSize, uploadOptions.maxBuffers, { blobHTTPHeaders: { blobContentType: file.mimetype } });
-    console.log("UploadStream completed.");
+    console.log("Starting upload...");
+    await blockBlobClient.upload(stream, stream.length, { blobHTTPHeaders: { blobContentType: file.mimetype } });
+    console.log("Upload completed.");
 
+    // Perbarui URL sesuai dengan format yang benar
     const url = `https://imagelayang.blob.core.windows.net/${CONTAINER_NAME}/${fileName}`;
 
     try {
@@ -98,6 +97,7 @@ const saveArticle = async (req, res) => {
     });
   }
 };
+
 
 
 const updateArticle = async (req, res) => {
