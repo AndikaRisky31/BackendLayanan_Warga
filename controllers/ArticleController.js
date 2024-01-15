@@ -70,7 +70,9 @@ const saveArticle = async (req, res) => {
     const stream = Buffer.from(file.data);
     const uploadOptions = { bufferSize: 4 * 1024 * 1024, maxBuffers: 20 };
 
+    console.log("Starting uploadStream...");
     await blockBlobClient.uploadStream(stream, uploadOptions.bufferSize, uploadOptions.maxBuffers, { blobHTTPHeaders: { blobContentType: file.mimetype } });
+    console.log("UploadStream completed.");
 
     const url = `https://imagelayang.blob.core.windows.net/${CONTAINER_NAME}/${fileName}`;
 
