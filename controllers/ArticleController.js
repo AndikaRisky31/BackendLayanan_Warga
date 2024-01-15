@@ -73,7 +73,7 @@ const saveArticle = async (req, res) => {
     console.log("Upload completed.");
 
     // Perbarui URL sesuai dengan format yang benar
-    const url = `https://imagelayang.blob.core.windows.net/${CONTAINER_NAME}/${fileName}`;
+    const url = `https://imagelayang.blob.core.windows.net/articles/${fileName}`;
 
     try {
       await ArticleModel.saveArticle(body, fileName, url);
