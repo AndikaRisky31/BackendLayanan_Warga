@@ -125,38 +125,45 @@ const updateArticle = async (req, res) => {
 
     let fileName = image1;
 
-    if (req.files !== null) {
+    if (req.files && req.files.file) {
       const file = req.files.file;
       const fileSize = file.data.length;
       const ext = path.extname(file.name);
-      fileName = file.md5 + ext;
-      const allowedType = ['.png', '.jpg', '.jpeg'];
+      fileName = `${file.md5}${ext}`;
+      const allowedTypes = ['.png', '.jpg', '.jpeg'];
 
-      if (!allowedType.includes(ext.toLowerCase())) {
-        return res.status(422).json({ msg: "Format image tidak sesuai" });
+      if (!allowedTypes.includes(ext.toLowerCase())) {
+        return res.status(422).json({ msg: "Format gambar tidak sesuai" });
       }
 
       if (fileSize > 5000000) {
-        return res.status(422).json({ msg: "Ukuran maksimal image hanya 5 MB" });
+        return res.status(422).json({ msg: "Ukuran maksimal gambar hanya 5 MB" });
       }
 
-      const filepath = `./public/imagesArticle/${image1}`;
+      const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
+      const containerClient = blobServiceClient.getContainerClient(CONTAINER_NAME);
+      const blockBlobClient = containerClient.getBlockBlobClient(fileName);
 
+      const stream = Buffer.from(file.data);
+      const uploadOptions = { bufferSize: 4 * 1024 * 1024, maxBuffers: 20 };
+
+      console.log("Starting uploadStream...");
+      await blockBlobClient.uploadStream(stream, uploadOptions.bufferSize, uploadOptions.maxBuffers, { blobHTTPHeaders: { blobContentType: file.mimetype } });
+      console.log("UploadStream completed.");
+
+      const url = `https://imagelayang.blob.core.windows.net/articles/${fileName}`;
+
+      // Hapus gambar lama di Azure Storage
       try {
-        fs.unlinkSync(filepath);
+        const oldBlobClient = containerClient.getBlockBlobClient(image1);
+        await oldBlobClient.delete();
       } catch (error) {
-        console.error("Error deleting image:", error);
+        console.error("Error deleting old image:", error);
       }
-
-      file.mv(`./public/imagesArticle/${fileName}`, (err) => {
-        if (err) {
-          return res.status(500).json({ msg: err.message });
-        }
-      });
     }
 
     const { body } = req;
-    const url = `${req.protocol}://${req.get("host")}/imagesArticle/${fileName}`;
+    const url = `https://imagelayang.blob.core.windows.net/articles/${fileName}`;
 
     await ArticleModel.updateArticle(body, fileName, url, id);
 
@@ -165,13 +172,14 @@ const updateArticle = async (req, res) => {
       data: {
         id: id,
         ...body,
+        image: url, // tambahkan url gambar dalam respons
       },
     });
   } catch (error) {
     console.error("Server Error:", error);
     res.status(500).json({
       message: 'Server Error',
-      serverMessage: error.message,
+      serverMessage: error.message || error,
     });
   }
 };
