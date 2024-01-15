@@ -1,6 +1,10 @@
 import * as ArticleModel from '../models/ArticleModal.js';
+import { BlobServiceClient } from "@azure/storage-blob";
 import path from "path";
 import fs from "fs";
+
+const AZURE_STORAGE_CONNECTION_STRING = process.env.AZURE_STORAGE_CONNECTION_STRING;
+const CONTAINER_NAME = "articles";
 
 const getArticles = async (req, res) => {
   try {
@@ -48,7 +52,10 @@ const saveArticle = async (req, res) => {
     const fileSize = file.data.length;
     const ext = path.extname(file.name);
     const fileName = `${Date.now()}_${file.md5}${ext}`;
-    const url = `https://layangapi-cc9d2c2831dc.herokuapp.com/public/imagesArticle/${fileName}`;
+    const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
+    const containerClient = blobServiceClient.getContainerClient(CONTAINER_NAME);
+    const blockBlobClient = containerClient.getBlockBlobClient(fileName);
+
     const allowedTypes = ['.png', '.jpg', '.jpeg'];
 
     if (!allowedTypes.includes(ext.toLowerCase())) {
@@ -59,26 +66,26 @@ const saveArticle = async (req, res) => {
       return res.status(422).json({ msg: 'Ukuran maksimal gambar hanya 5 MB' });
     }
 
-    file.mv(`./public/imagesArticle/${fileName}`, async (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ msg: err.message });
-      }
+    const stream = file.createReadStream();
+    const uploadOptions = { bufferSize: 4 * 1024 * 1024, maxBuffers: 20 };
 
-      try {
-        await ArticleModel.saveArticle(body, fileName, url);
+    await blockBlobClient.uploadStream(stream, uploadOptions.bufferSize, uploadOptions.maxBuffers, { blobHTTPHeaders: { blobContentType: file.mimetype } });
 
-        res.status(201).json({
-          message: 'CREATE new article success',
-          data: body,
-        });
-      } catch (error) {
-        res.status(500).json({
-          message: 'Server Error',
-          serverMessage: error,
-        });
-      }
-    });
+    const url = `https://imagelayang.blob.core.windows.net/${CONTAINER_NAME}/${fileName}`;
+
+    try {
+      await ArticleModel.saveArticle(body, fileName, url);
+
+      res.status(201).json({
+        message: 'CREATE new article success',
+        data: body,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: 'Server Error',
+        serverMessage: error,
+      });
+    }
   } catch (error) {
     res.status(500).json({
       message: 'Server Error',
