@@ -66,7 +66,8 @@ const saveArticle = async (req, res) => {
       return res.status(422).json({ msg: 'Ukuran maksimal gambar hanya 5 MB' });
     }
 
-    const stream = file.createReadStream();
+    // Gunakan buffer untuk membuat stream
+    const stream = Buffer.from(file.data);
     const uploadOptions = { bufferSize: 4 * 1024 * 1024, maxBuffers: 20 };
 
     await blockBlobClient.uploadStream(stream, uploadOptions.bufferSize, uploadOptions.maxBuffers, { blobHTTPHeaders: { blobContentType: file.mimetype } });
