@@ -9,8 +9,8 @@ const CONTAINER_NAME = "articles";
 const getArticles = async (req, res) => {
   try {
     const [data] = await ArticleModel.getArticles();
-
-    res.json({
+    console.log(data);
+    res.status(201).json({
       message: 'GET all Article success',
       data: data,
     });

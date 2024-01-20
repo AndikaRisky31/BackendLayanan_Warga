@@ -12,11 +12,14 @@ import pengajuanRoutes from './routes/pengajuanRoutes.js';
 import daerahRoutes from './routes/daerahRoutes.js';
 import laporanRoutes from './routes/laporanRoutes.js'
 import fileUpload from 'express-fileupload';
+import passport from 'passport';
 
 var PORT =   process.env.PORT || 3001;
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
+// app.use(passport.initialize());
+// app.use(passport.session());
 app.use(fileUpload());
 app.use(express.static("public"));
 app.use(cors());
