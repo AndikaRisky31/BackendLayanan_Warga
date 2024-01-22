@@ -1,6 +1,8 @@
 // UserController.js
 import * as UserModel from '../models/UserModel.js';
 import bcrypt from 'bcrypt';
+import firebase from 'firebase/compat/app';
+import 'firebase/auth';
 
 const saltRounds = 10;
 
@@ -31,15 +33,19 @@ export const createUser = async (req, res) => {
     const hashedPassword = await hashPassword(password);
     const userData = { kelurahan_id, username, password: hashedPassword, email, nomor, alamat, kota };
 
+    // Simpan data pengguna ke basis data lokal Anda (gunakan model pengguna)
     await UserModel.createUser(userData);
 
+    // Pastikan untuk menghentikan eksekusi setelah mengirim respons
     res.status(201).json({
       success: true,
       message: 'User created successfully',
       data: userData,
     });
   } catch (error) {
-    console.error("Error in createUser.UserController: ", error);
+    console.error("Error in createUser: ", error);
+
+    // Pastikan untuk menghentikan eksekusi setelah mengirim respons
     res.status(500).json({
       success: false,
       message: 'Server Error',

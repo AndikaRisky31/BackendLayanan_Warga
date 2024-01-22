@@ -13,9 +13,13 @@ import daerahRoutes from './routes/daerahRoutes.js';
 import laporanRoutes from './routes/laporanRoutes.js'
 import fileUpload from 'express-fileupload';
 import passport from 'passport';
+import firebase from 'firebase/compat/app';
+import 'firebase/auth';
+import { firebaseConfig } from './config/firebaseConfig.js';
 
 var PORT =   process.env.PORT || 3001;
 const app = express();
+firebase.initializeApp(firebaseConfig);
 
 app.use(express.urlencoded({ extended: true }));
 // app.use(passport.initialize());
