@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2023 at 03:48 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Dec 22, 2023 at 07:38 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44,9 +44,13 @@ CREATE TABLE `admin_kelurahan` (
 --
 
 INSERT INTO `admin_kelurahan` (`id`, `kelurahan_id`, `nama`, `password`, `pangkat`, `nomor`, `email`, `alamat`, `imageURL`) VALUES
-(1, 1, 'tes admin', 'admin123', 'admin rt', '0851', 'tes@gmail.com', 'admin tes1 alamat', 'image'),
-(2, 1, 'tes coba', 'coba', 'admin coba', '0852', 'tes2@gmail.com', 'tes2 alamat', 'image'),
-(3, 2, 'admin tes3', 'tes3', 'admin rt', '0853', 'tes3@gmail.com', 'tes3 alamat', 'image');
+(2, 1, 'sasasa', '323 2323 23232', '3232323232', '3232323232', '323 23232 32323', '3232 323232 323', '3232 32323 2323 2323'),
+(9, 10, 'SASAS', 'SASAS', 'SAAS', 'SASAS', 'SASAS', 'SASASA', ''),
+(10, 1, 'Surya Widiajaya Putra', 'SuryaSuryaSuryaSurya21', 'Kepala Desa', '08099099900', 'SuryaWidiajayaa@gmail.com', 'ssss', ''),
+(11, 12, 'Taufiq', '123123123', 'Kepalah lurah', '0032030203', 'Taufiq69@gmail.com', '-', ''),
+(12, 13, 'Surya', 'sasa', 'Kepala', 'sasa', 'sasa', 'sasa', ''),
+(13, 10, 'Surya', '121212', 'sasa', '080808', 'surya@gmail.com', 'qwqw', ''),
+(16, 13, 'wq', '12212', 'wq', '765655', 'Surya@gmail.com', 'sasasa', '');
 
 -- --------------------------------------------------------
 
@@ -62,6 +66,35 @@ CREATE TABLE `agenda` (
   `imageURL` varchar(255) NOT NULL,
   `tempat` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `article`
+--
+
+CREATE TABLE `article` (
+  `article_id` int(10) UNSIGNED NOT NULL,
+  `author` varchar(40) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `title` varchar(225) DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  `image` varchar(225) DEFAULT NULL,
+  `url` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `article`
+--
+
+INSERT INTO `article` (`article_id`, `author`, `date`, `title`, `content`, `image`, `url`) VALUES
+(22, 'Kacey Denesik', '2022-12-23', 'Gaya Politik Jokowi Kelas Dewa Susah Ditebak, dari Pilih Ma\'ruf Amin hingga Restui Gibran, Siapa Backingannya?', 'Presiden Joko Widodo (Jokowi) melakukan sejumlah manuver politik yang membuat banyak orang menggelengkan kepala. Ketua Dewan Pimpinan Pusat (DPP) Partai Solidaritas Indonesia (PSI) William Aditya Sarana dengan gamblang menyebut semua orang akan gagal menebak Jokowi. Inilah beberapa bukti gaya politik Jokowi kelas dewa susah ditebak. ', 'b5c6fed06b1926eb122ee76abb45ec4b.png', 'http://localhost:3000/imagesArticle/b5c6fed06b1926eb122ee76abb45ec4b.png'),
+(23, 'Sandro Gatra', '2023-12-29', 'Mitigasi Dampak Politik \"Ndasmu Etik\"', 'PASTINYA sebagian pembaca sudah mengetahui atau menonton video pendek Capres Prabowo Subianto dalam Rapat Koordinasi Nasional (Rakornas) Partai Gerindra yang kemudian viral di media sosial.', 'fcca6a8cae099121a06d8691f7937f48.png', 'http://localhost:3000/imagesArticle/fcca6a8cae099121a06d8691f7937f48.png'),
+(26, 'Administrator', '0000-00-00', 'Wujudkan Pemilu 2024 Damai tanpa Politik Identitas', 'Menjelang kontestasi Pemilu 2024, kehadiran politik identitas diprediksi akan menjadi pemicu perpecahan bangsa. Padahal, Pemilu merupakan pesta demokrasi masyarakat yang seharusnya tidak ada hal negatif yang muncul. Semua pemuka agama agar tidak menyiarkan politik identitas saat khutbah dalam kegiatan keagamaan.', 'cdb3c8df8d764d69b5b6e894171ec78a.png', 'http://localhost:3000/imagesArticle/cdb3c8df8d764d69b5b6e894171ec78a.png'),
+(28, 'Rizky Adha Mahendra ', '0000-00-00', 'Mahfud: Saya Menolak Politik Identitas, tapi Identitas Politik Boleh', 'Cawapres nomor urut 3, Mahfud Md, menghadiri dialog bersama tokoh di Gedung Long See Tong, Kota Padang, Sumatera Barat (Sumbar). Dia meminta warga selalu memelihara kerukunan.\r\n', 'c28e5e9e9f15c30c35dda5caf5d2aff1.png', 'http://localhost:3000/imagesArticle/c28e5e9e9f15c30c35dda5caf5d2aff1.png'),
+(29, 'a', '0000-00-00', 'sas', 'sasa', '1703145414296_cfb591ccc22e8968b68fc5dd281cdffd.png', 'http://localhost:3000/imagesArticle/1703145414296_cfb591ccc22e8968b68fc5dd281cdffd.png'),
+(30, 'sasasasas', '0000-00-00', 'sasa', 'sasasasa', '83d18938c89d5b081fab752e186f8a02.png', 'http://localhost:3000/imagesArticle/83d18938c89d5b081fab752e186f8a02.png'),
+(31, 'SA', '0000-00-00', 'SA', 'SASA', '1703147292713_83d18938c89d5b081fab752e186f8a02.png', 'http://localhost:3000/imagesArticle/1703147292713_83d18938c89d5b081fab752e186f8a02.png');
 
 -- --------------------------------------------------------
 
@@ -7850,7 +7883,12 @@ CREATE TABLE `kelurahan` (
 
 INSERT INTO `kelurahan` (`id`, `district_id`, `name`) VALUES
 (1, '3316110', 'Karangtalun'),
-(2, '1101021', 'Karangayar');
+(10, '3174010', 'Karang baru'),
+(11, '1505030', 'Karang Taruna'),
+(12, '5103020', 'Karang Bdui'),
+(13, '3174040', 'Jakarta'),
+(14, '3203120', 'Kelurahan2'),
+(15, '1704061', 'KELURAHAN1');
 
 -- --------------------------------------------------------
 
@@ -7864,19 +7902,9 @@ CREATE TABLE `laporan` (
   `bukti_laporan` varchar(255) NOT NULL,
   `lokasi_laporan` text NOT NULL,
   `jenis_laporan` enum('Infrastruktur dan Lingkungan','Keamanan dan Ketertiban','Ekonomi','Kesehatan dan Layanan Kesehatan') NOT NULL,
-  `deskripsi` text DEFAULT NULL
+  `deskripsi` text DEFAULT NULL,
+  `url` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `laporan`
---
-
-INSERT INTO `laporan` (`laporan_ID`, `user_id`, `bukti_laporan`, `lokasi_laporan`, `jenis_laporan`, `deskripsi`) VALUES
-(1, 4, 'image', 'dimana', 'Infrastruktur dan Lingkungan', 'buang sampah'),
-(2, 4, 'image', 'dimana', 'Keamanan dan Ketertiban', 'maling'),
-(3, 2, 'image', 'dimana', 'Infrastruktur dan Lingkungan', 'sampah'),
-(4, 4, 'dimana', 'dimana', 'Ekonomi', 'uang'),
-(5, 2, 'image', 'dimana', 'Kesehatan dan Layanan Kesehatan', 'puskesmas');
 
 -- --------------------------------------------------------
 
@@ -7888,23 +7916,27 @@ CREATE TABLE `pengajuan` (
   `pengajuan_id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
   `jenis_surat` enum('Surat Pengantar','Keterangan Tidak Mampu','Pembuatan Keluarga') NOT NULL,
-  `tanggal_pengajuan` timestamp NOT NULL DEFAULT current_timestamp(),
-  `proses` enum('Terkirim','Diproses','Sudah Diproses','Selesai') NOT NULL
+  `tanggal_pengajuan` datetime NOT NULL,
+  `proses` enum('Terkirim','Diproses','Sudah Diproses','Selesai') NOT NULL,
+  `file_ktp` varchar(255) NOT NULL,
+  `file_kk` varchar(255) NOT NULL,
+  `nama_lengkap` varchar(50) NOT NULL,
+  `no_nik` varchar(16) NOT NULL,
+  `agama` enum('Islam','Kristen','Khatolik','Hindu','Budha') NOT NULL,
+  `alamat` varchar(255) NOT NULL,
+  `status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pengajuan`
 --
 
-INSERT INTO `pengajuan` (`pengajuan_id`, `user_id`, `jenis_surat`, `tanggal_pengajuan`, `proses`) VALUES
-(1, 2, 'Surat Pengantar', '2023-12-16 17:00:00', 'Diproses'),
-(2, 2, 'Pembuatan Keluarga', '2023-12-16 17:00:00', 'Terkirim'),
-(3, 2, '', '2023-12-16 17:00:00', 'Diproses'),
-(4, 1, 'Surat Pengantar', '2023-12-16 17:00:00', 'Terkirim'),
-(5, 1, 'Surat Pengantar', '2023-12-16 17:00:00', 'Sudah Diproses'),
-(6, 1, 'Keterangan Tidak Mampu', '2023-12-16 17:00:00', 'Terkirim'),
-(7, 1, 'Keterangan Tidak Mampu', '2023-12-11 17:00:00', 'Diproses'),
-(8, 1, 'Pembuatan Keluarga', '2023-12-12 12:30:16', 'Terkirim');
+INSERT INTO `pengajuan` (`pengajuan_id`, `user_id`, `jenis_surat`, `tanggal_pengajuan`, `proses`, `file_ktp`, `file_kk`, `nama_lengkap`, `no_nik`, `agama`, `alamat`, `status`) VALUES
+(17, 17, 'Surat Pengantar', '2023-12-21 08:48:21', 'Terkirim', '', '', 'sasa', '23235343232', 'Islam', 'sasasa', 'sasasa'),
+(18, 19, 'Keterangan Tidak Mampu', '2023-12-21 08:48:21', 'Selesai', '', '', 'dsdsdsds', '3232324225', 'Hindu', 'sasasasasa', 'ssasasasa'),
+(19, 23, 'Surat Pengantar', '2023-12-21 08:48:21', 'Terkirim', '', '', 'budi', '121212121', 'Islam', 'sasa', 'sasa'),
+(20, 17, 'Surat Pengantar', '2023-12-21 08:48:21', 'Terkirim', '', '', 'sasa', '23235343232', 'Islam', 'sasasa', 'sasasa'),
+(21, 19, 'Keterangan Tidak Mampu', '2023-12-21 08:48:21', 'Diproses', '', '', 'dsdsdsds', '3232324225', 'Hindu', 'sasasasasa', 'ssasasasa');
 
 -- --------------------------------------------------------
 
@@ -7992,10 +8024,13 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `kelurahan_id`, `username`, `password`, `email`, `nomor`, `alamat`, `kota`, `imageURL`) VALUES
-(1, 1, 'tes user1', 'user1', 'user@gmail.com', '0851', 'user1 alamat', 'user 1 tempat lahir', 'image'),
-(2, 1, 'tes user2', 'user2', 'user2@gmail.com', '0851', 'user2 alamat', 'user 2 tempat lahir', 'image'),
-(3, 2, 'tes user3 patch', 'user3 patc', 'user3patch@gmail.com', '0851', 'user3 patch alamat', 'user patch tempat lahir', 'image'),
-(4, 2, 'coba user', 'cobapw', 'coba@gmail.com', '0853', 'coba alamat', 'coba kota', 'image');
+(16, 1, 'Budi Setiawan', '121212', 'BudiSetiawan@gmail.com', '087877878788', 'Jl. Pahlawan No. 123, RT 01/RW 02, Kel. Sukajaya, Kec. Bogor Utara, Kota Bogor', 'Bogor', NULL),
+(17, 1, 'Susi Susanti', '121212', 'Susi@gmail.com', '08776636361', 'Jl. Merdeka No. 45, RT 05/RW 10, Kel. Menteng, Kec. Jakarta Pusat, DKI Jakarta', 'Jakarta', NULL),
+(18, 1, 'Budi Darmawan', '121212', 'Budi@gmail.com', '08785653346', 'Jl. Cendrawasih No. 78, RT 03/RW 07, Kel. Anggrek, Kec. Surabaya Barat, Kota Surabaya', 'Surabaya', NULL),
+(19, 1, 'Wawan Setiawan', '121212', 'Wawan@gmail.com', '089898319883', 'Jl. Diponegoro No. 56, RT 02/RW 01, Kel. Gajahmada, Kec. Pontianak Kota, Kota Pontianak', 'Pontianak', NULL),
+(20, 1, 'Usernama', '121212', 'Username@gmail.com', '0878737472', 'Jl. Surya Kencana No. 34, RT 07/RW 03, Kel. Karangasem, Kec. Denpasar Selatan, Kota Denpasar', 'Denpasar', NULL),
+(21, 1, 'Budi Setiawan', '121212', 'BudiSetiawan@gmail.com', '087877878788', 'Jl. Pahlawan No. 123, RT 01/RW 02, Kel. Sukajaya, Kec. Bogor Utara, Kota Bogor', 'Bogor', NULL),
+(23, 1, 'Budi Darmawan', '121212', 'Budi@gmail.com', '08785653346', 'Jl. Cendrawasih No. 78, RT 03/RW 07, Kel. Anggrek, Kec. Surabaya Barat, Kota Surabaya', 'Surabaya', NULL);
 
 --
 -- Indexes for dumped tables
@@ -8014,6 +8049,12 @@ ALTER TABLE `admin_kelurahan`
 ALTER TABLE `agenda`
   ADD PRIMARY KEY (`agenda_id`),
   ADD KEY `kelurahan_id_indexx` (`kelurahan_id`);
+
+--
+-- Indexes for table `article`
+--
+ALTER TABLE `article`
+  ADD PRIMARY KEY (`article_id`);
 
 --
 -- Indexes for table `kabupaten`
@@ -8077,7 +8118,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `admin_kelurahan`
 --
 ALTER TABLE `admin_kelurahan`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `agenda`
@@ -8086,22 +8127,28 @@ ALTER TABLE `agenda`
   MODIFY `agenda_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `article`
+--
+ALTER TABLE `article`
+  MODIFY `article_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
+--
 -- AUTO_INCREMENT for table `kelurahan`
 --
 ALTER TABLE `kelurahan`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `laporan`
 --
 ALTER TABLE `laporan`
-  MODIFY `laporan_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `laporan_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pengajuan`
 --
 ALTER TABLE `pengajuan`
-  MODIFY `pengajuan_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `pengajuan_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `super_admin`
@@ -8113,7 +8160,7 @@ ALTER TABLE `super_admin`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Constraints for dumped tables

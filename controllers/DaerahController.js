@@ -4,9 +4,10 @@ export const getAllProvinsi = async (req, res) => {
     try {
       const data = await daerahModel.getAllProvinsi();
   
-      res.json(
-        data
-      );
+      res.json({
+        message: 'GET all Provinsi success',
+        data: data,
+      });
     } catch (error) {
       res.status(500).json({
         message: 'Server Error',
@@ -56,13 +57,48 @@ export const getKelurahanByIdKecamatan = async(req,res)=>{
 };
 export const createKelurahan = async(req,res)=>{
   try {
-    const { district_id,name } = req.body;
-    const data = await daerahModel.createKelurahan(district_id,name);
+    const { district_id, name } = req.body;
+    const data = await daerahModel.createKelurahan(district_id, name);
     res.json(data);
   } catch (error) {
       res.status(500).json({
       message: 'Server Error',
       serverMessage: error.message || error,
       });
+  }
+}
+
+export const getAllKelurahan = async (req, res) => {
+  try {
+    const data = await daerahModel.getAllKelurahan();
+
+    res.json({
+            message: 'GET all Kelurahan success',
+      data: data,
+  });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Server Error',
+      serverMessage: error.message || error,
+    });
+  }
+};
+
+export const deleteKelurahan = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await daerahModel.deleteKelurahan(id);
+
+    res.json({
+      message: 'Delete Kelurahan success',
+      data: {
+        id: id,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Server Error',
+      serverMessage: error.message || error,
+    });
   }
 }

@@ -1,23 +1,8 @@
 import * as adminKelurahanModel from '../models/AdminKelurahanModel.js';
 
-const getAdminKelurahanById = async (req, res) => {
-  try {
-    const [data] = await adminKelurahanModel.getAdminKelurahanById();
-
-    res.json({
-      message: 'GET Admin Kelurahan success',
-      data: data,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: 'Server Error',
-      serverMessage: error.message || error,
-    });
-  }
-};
 const getAdminKelurahanByKelurahan = async (req, res) => {
   try {
-    const data = await adminKelurahanModel.getAdminKelurahanByKelurahan();
+    const [data] = await adminKelurahanModel.getAdminKelurahanByKelurahan();
 
     res.json({
       message: 'GET All Admin Kelurahan success',
@@ -51,10 +36,10 @@ const getAdminKelurahanByKelurahanId = async (req, res) => {
 
 const createAdminKelurahanByKelurahan = async (req, res) => {
   const { body } = req;
-  const {nama, password, pangkat, nomor, email, alamat, imageURL} = req.body;
+  const {nama, password, pangkat, nomor, email, alamat} = req.body;
   console.log(req.body);
 
-  if(!(nama && password && pangkat && nomor && email && alamat && imageURL)){
+  if(!(nama && password && pangkat && nomor && email && alamat)){
     return res.status(400).json({
       message: "format data yang anda masukkan salah!",
       data: null
@@ -122,7 +107,6 @@ const deleteAdminKelurahanByKelurahan = (req, res) => {
 export {
   getAdminKelurahanByKelurahanId,
   getAdminKelurahanByKelurahan,
-  getAdminKelurahanById,
   createAdminKelurahanByKelurahan,
   updateAdminKelurahanByKelurahan,
   deleteAdminKelurahanByKelurahan

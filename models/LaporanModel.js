@@ -1,9 +1,8 @@
 import { db } from "../config/Database.js";
 
-export const createLaporan = async (body,fileLaporPath) => {
-  const currentDateTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    const query = `INSERT INTO laporan (user_id, bukti_laporan, lokasi_laporan, jenis_laporan, deskripsi,waktu) VALUES (?, ?, ?, ?, ?,?)`;
-    const values = [body.user_id, fileLaporPath, body.lokasi_laporan, body.jenis_laporan, body.deskripsi,currentDateTime];
+export const createLaporan = async (body) => {
+    const query = `INSERT INTO laporan (user_id, bukti_laporan, lokasi_laporan, jenis_laporan, deskripsi) VALUES (?, ?, ?, ?, ?)`;
+    const values = [body.user_id, body.bukti_laporan, body.lokasi_laporan, body.jenis_laporan, body.deskripsi];
     
     return db.execute(query, values);
 };
@@ -21,7 +20,7 @@ export const getAllLaporan = async () => {
 export const getLaporanByUserId = async (user_id) => {
     try {
       const userId = user_id || null;
-      const query = 'SELECT * FROM laporan WHERE user_id = ?';
+      const query = 'SELECT username, laporan_ID, bukti_laporan, lokasi_laporan, jenis_laporan, deskripsi FROM laporan JOIN user ON laporan.user_id = user.user_id WHERE user.kelurahan_id = ?';
       const [rows] = await db.execute(query, [userId]);
   
       return rows;

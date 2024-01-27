@@ -43,13 +43,30 @@ export const getKelurahanByIdKecamatan = async (district_id) => {
       throw error;
   }
   };
-export const createKelurahan = async (district_id,nama) => {
-  const query = 'INSERT INTO kelurahan (district_id,name) VALUES(?,?) ';
+export const createKelurahan = async (district_id,name) => {
+  const query = 'INSERT INTO kelurahan (district_id, name) VALUES(?,?) ';
   
   try {
-      const [rows] = await db.query(query,[district_id,nama]);
+      const [rows] = await db.query(query,[district_id, name]);
       return rows;
   } catch (error) {
       throw error;
   }
+  };
+
+  export const getAllKelurahan = async () => {
+    const query = 'SELECT * FROM kelurahan ORDER BY name ASC';
+  
+    try {
+      const [rows] = await db.query(query);
+      return rows;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  export const deleteKelurahan = async (id) => {
+    const SQLQuery = 'DELETE FROM kelurahan WHERE id=?';
+  
+    return db.execute(SQLQuery, [id]);
   };

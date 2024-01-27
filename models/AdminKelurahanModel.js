@@ -8,33 +8,21 @@ const getAdminKelurahanByKelurahan = async () => {
 };
 
 const getAdminKelurahanByKelurahanId = async (id) => {
-  const query = `SELECT * FROM admin_kelurahan WHERE kelurahan_id=?`;
+  const query = `SELECT * FROM admin_kelurahan WHERE id=?`;
 
   return db.execute(query, [id]);
 }
 
 const createAdminKelurahanByKelurahan = async (body) => {
-  const query = 'INSERT INTO admin_kelurahan (kelurahan_id, nama, password, pangkat, nomor, email, alamat, imageURL) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-  const values = [body.kelurahan_id, body.nama, body.password, body.pangkat, body.nomor, body.email, body.alamat, body.imageURL];
+  const query = 'INSERT INTO admin_kelurahan (kelurahan_id, nama, password, pangkat, nomor, email, alamat) VALUES (?, ?, ?, ?, ?, ?, ?)';
+  const values = [body.kelurahan_id, body.nama, body.password, body.pangkat, body.nomor, body.email, body.alamat];
 
   return db.execute(query, values);
 };
 
 const updateAdminKelurahanByKelurahan = async (body, id) => {
-  const query = `
-    UPDATE admin_kelurahan 
-    SET 
-      kelurahan_id = COALESCE(?, kelurahan_id), 
-      nama = COALESCE(?, nama),
-      password = COALESCE(?, password),
-      pangkat = COALESCE(?, pangkat),
-      nomor = COALESCE(?, nomor),
-      email = COALESCE(?, email),
-      alamat = COALESCE(?, alamat),
-      imageURL = COALESCE(?, imageURL)
-    WHERE id = ?;
-  `;
-  
+  const query = 'UPDATE admin_kelurahan SET kelurahan_id=?, nama=?, password=?, pangkat=?, nomor=?, email=?, alamat=? WHERE id=?';
+
   const values = [
     body.kelurahan_id,
     body.nama,
@@ -43,14 +31,12 @@ const updateAdminKelurahanByKelurahan = async (body, id) => {
     body.nomor,
     body.email,
     body.alamat,
-    body.imageURL,
     id,
   ];
 
-  const sanitizedValues = values.map(value => (value !== undefined ? value : null));
-
-  return db.execute(query, sanitizedValues);
+  return db.execute(query, values);
 };
+
 
 
 
@@ -74,7 +60,7 @@ export {
 export const getAdminKelurahanById = async(id)=>{
   const query = "SELECT * FROM admin_kelurahan WHERE id = ?";
   try {
-    const rows = await db.query(query, [id]);
+    const [rows] = await db.query(query, [id]);
     return rows;
   } catch (error) {
     throw error;
