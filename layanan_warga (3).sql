@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 20, 2023 at 12:13 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Jan 28, 2024 at 03:21 PM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -37,7 +37,20 @@ CREATE TABLE `admin_kelurahan` (
   `email` varchar(255) NOT NULL,
   `alamat` varchar(255) NOT NULL,
   `imageURL` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `admin_kelurahan`
+--
+
+INSERT INTO `admin_kelurahan` (`id`, `kelurahan_id`, `nama`, `password`, `pangkat`, `nomor`, `email`, `alamat`, `imageURL`) VALUES
+(2, 1, 'sasasa', '323 2323 23232', '3232323232', '3232323232', '323 23232 32323', '3232 323232 323', '3232 32323 2323 2323'),
+(9, 10, 'SASAS', 'SASAS', 'SAAS', 'SASAS', 'SASAS', 'SASASA', ''),
+(10, 1, 'Surya Widiajaya Putra', 'SuryaSuryaSuryaSurya21', 'Kepala Desa', '08099099900', 'SuryaWidiajayaa@gmail.com', 'ssss', ''),
+(11, 12, 'Taufiq', '123123123', 'Kepalah lurah', '0032030203', 'Taufiq69@gmail.com', '-', ''),
+(12, 13, 'Surya', 'sasa', 'Kepala', 'sasa', 'sasa', 'sasa', ''),
+(13, 10, 'Surya', '121212', 'sasa', '080808', 'surya@gmail.com', 'qwqw', ''),
+(16, 13, 'wq', '12212', 'wq', '765655', 'Surya@gmail.com', 'sasasa', '');
 
 -- --------------------------------------------------------
 
@@ -52,7 +65,7 @@ CREATE TABLE `agenda` (
   `tanggal` datetime DEFAULT NULL,
   `imageURL` varchar(255) NOT NULL,
   `tempat` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -63,25 +76,25 @@ CREATE TABLE `agenda` (
 CREATE TABLE `article` (
   `article_id` int(10) UNSIGNED NOT NULL,
   `author` varchar(40) DEFAULT NULL,
-  `date` datetime DEFAULT NULL,
+  `date` date DEFAULT NULL,
   `title` varchar(225) DEFAULT NULL,
   `content` text DEFAULT NULL,
   `image` varchar(225) DEFAULT NULL,
   `url` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `article`
 --
 
 INSERT INTO `article` (`article_id`, `author`, `date`, `title`, `content`, `image`, `url`) VALUES
-(18, 'andikaaa', '2023-12-19 10:02:51', 'halooo', 'ajkfhajkhfjkawef', '1702980171746_07b70acc9cffe449023666a3540e66f4.png', 'http://localhost:3000/imagesArticle/1702980171746_07b70acc9cffe449023666a3540e66f4.png'),
-(19, 'andikaaa', '2023-12-19 11:42:21', 'halooo', 'ajkfhajkhfjkawef', '1702986141329_07b70acc9cffe449023666a3540e66f4.png', 'http://localhost:3000/imagesArticle/1702986141329_07b70acc9cffe449023666a3540e66f4.png'),
-(20, 'andikaaa', '2023-12-19 11:42:23', 'halooo', 'ajkfhajkhfjkawef', '1702986143646_07b70acc9cffe449023666a3540e66f4.png', 'http://localhost:3000/imagesArticle/1702986143646_07b70acc9cffe449023666a3540e66f4.png'),
-(21, 'andikaaa', '2023-12-19 11:42:25', 'halooo', 'ajkfhajkhfjkawef', '1702986145079_07b70acc9cffe449023666a3540e66f4.png', 'http://localhost:3000/imagesArticle/1702986145079_07b70acc9cffe449023666a3540e66f4.png'),
-(22, 'andikaaa', '2023-12-19 11:42:27', 'halooo', 'ajkfhajkhfjkawef', '1702986147116_07b70acc9cffe449023666a3540e66f4.png', 'http://localhost:3000/imagesArticle/1702986147116_07b70acc9cffe449023666a3540e66f4.png'),
-(23, 'andikaaa', '2023-12-19 11:42:27', 'halooo', 'ajkfhajkhfjkawef', '1702986147937_07b70acc9cffe449023666a3540e66f4.png', 'http://localhost:3000/imagesArticle/1702986147937_07b70acc9cffe449023666a3540e66f4.png'),
-(24, 'andi', '2023-12-19 11:42:32', 'halooo', 'ajkfhajkhfjkawef', '1702986152753_07b70acc9cffe449023666a3540e66f4.png', 'http://localhost:3000/imagesArticle/1702986152753_07b70acc9cffe449023666a3540e66f4.png');
+(22, 'Kacey Denesik', '2022-12-23', 'Gaya Politik Jokowi Kelas Dewa Susah Ditebak, dari Pilih Ma\'ruf Amin hingga Restui Gibran, Siapa Backingannya?', 'Presiden Joko Widodo (Jokowi) melakukan sejumlah manuver politik yang membuat banyak orang menggelengkan kepala. Ketua Dewan Pimpinan Pusat (DPP) Partai Solidaritas Indonesia (PSI) William Aditya Sarana dengan gamblang menyebut semua orang akan gagal menebak Jokowi. Inilah beberapa bukti gaya politik Jokowi kelas dewa susah ditebak. ', 'b5c6fed06b1926eb122ee76abb45ec4b.png', 'http://localhost:3000/imagesArticle/b5c6fed06b1926eb122ee76abb45ec4b.png'),
+(23, 'Sandro Gatra', '2023-12-29', 'Mitigasi Dampak Politik \"Ndasmu Etik\"', 'PASTINYA sebagian pembaca sudah mengetahui atau menonton video pendek Capres Prabowo Subianto dalam Rapat Koordinasi Nasional (Rakornas) Partai Gerindra yang kemudian viral di media sosial.', 'fcca6a8cae099121a06d8691f7937f48.png', 'http://localhost:3000/imagesArticle/fcca6a8cae099121a06d8691f7937f48.png'),
+(26, 'Administrator', '0000-00-00', 'Wujudkan Pemilu 2024 Damai tanpa Politik Identitas', 'Menjelang kontestasi Pemilu 2024, kehadiran politik identitas diprediksi akan menjadi pemicu perpecahan bangsa. Padahal, Pemilu merupakan pesta demokrasi masyarakat yang seharusnya tidak ada hal negatif yang muncul. Semua pemuka agama agar tidak menyiarkan politik identitas saat khutbah dalam kegiatan keagamaan.', 'cdb3c8df8d764d69b5b6e894171ec78a.png', 'http://localhost:3000/imagesArticle/cdb3c8df8d764d69b5b6e894171ec78a.png'),
+(28, 'Rizky Adha Mahendra ', '0000-00-00', 'Mahfud: Saya Menolak Politik Identitas, tapi Identitas Politik Boleh', 'Cawapres nomor urut 3, Mahfud Md, menghadiri dialog bersama tokoh di Gedung Long See Tong, Kota Padang, Sumatera Barat (Sumbar). Dia meminta warga selalu memelihara kerukunan.\r\n', 'c28e5e9e9f15c30c35dda5caf5d2aff1.png', 'http://localhost:3000/imagesArticle/c28e5e9e9f15c30c35dda5caf5d2aff1.png'),
+(29, 'a', '0000-00-00', 'sas', 'sasa', '1703145414296_cfb591ccc22e8968b68fc5dd281cdffd.png', 'http://localhost:3000/imagesArticle/1703145414296_cfb591ccc22e8968b68fc5dd281cdffd.png'),
+(30, 'sasasasas', '0000-00-00', 'sasa', 'sasasasa', '83d18938c89d5b081fab752e186f8a02.png', 'http://localhost:3000/imagesArticle/83d18938c89d5b081fab752e186f8a02.png'),
+(31, 'SA', '0000-00-00', 'SA', 'SASA', '1703147292713_83d18938c89d5b081fab752e186f8a02.png', 'http://localhost:3000/imagesArticle/1703147292713_83d18938c89d5b081fab752e186f8a02.png');
 
 -- --------------------------------------------------------
 
@@ -93,7 +106,7 @@ CREATE TABLE `kabupaten` (
   `id` varchar(4) NOT NULL,
   `province_id` varchar(2) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `kabupaten`
@@ -625,7 +638,7 @@ CREATE TABLE `kecamatan` (
   `id` varchar(10) NOT NULL,
   `regency_id` varchar(4) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `kecamatan`
@@ -7862,7 +7875,7 @@ CREATE TABLE `kelurahan` (
   `id` int(10) NOT NULL,
   `district_id` varchar(7) NOT NULL,
   `name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `kelurahan`
@@ -7870,8 +7883,12 @@ CREATE TABLE `kelurahan` (
 
 INSERT INTO `kelurahan` (`id`, `district_id`, `name`) VALUES
 (1, '3316110', 'Karangtalun'),
-(2, '1101010', 'bajoooooo'),
-(3, '3316110', 'Sembongin');
+(10, '3174010', 'Karang baru'),
+(11, '1505030', 'Karang Taruna'),
+(12, '5103020', 'Karang Bdui'),
+(13, '3174040', 'Jakarta'),
+(14, '3203120', 'Kelurahan2'),
+(15, '1704061', 'KELURAHAN1');
 
 -- --------------------------------------------------------
 
@@ -7881,13 +7898,13 @@ INSERT INTO `kelurahan` (`id`, `district_id`, `name`) VALUES
 
 CREATE TABLE `laporan` (
   `laporan_ID` int(10) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL,
+  `user_id` varchar(28) NOT NULL,
   `bukti_laporan` varchar(255) NOT NULL,
   `lokasi_laporan` text NOT NULL,
   `jenis_laporan` enum('Infrastruktur dan Lingkungan','Keamanan dan Ketertiban','Ekonomi','Kesehatan dan Layanan Kesehatan') NOT NULL,
   `deskripsi` text DEFAULT NULL,
-  `waktu` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `url` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -7897,18 +7914,18 @@ CREATE TABLE `laporan` (
 
 CREATE TABLE `pengajuan` (
   `pengajuan_id` int(10) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL,
-  `jenis_surat` enum('Surat Pengantar','Surat Keterangan Tidak Mampu','Surat Pembuatan Kartu Keluarga') NOT NULL,
+  `user_id` varchar(28) NOT NULL,
+  `jenis_surat` enum('Surat Pengantar','Keterangan Tidak Mampu','Pembuatan Keluarga') NOT NULL,
   `tanggal_pengajuan` datetime NOT NULL,
   `proses` enum('Terkirim','Diproses','Sudah Diproses','Selesai') NOT NULL,
   `file_ktp` varchar(255) NOT NULL,
   `file_kk` varchar(255) NOT NULL,
   `nama_lengkap` varchar(50) NOT NULL,
   `no_nik` varchar(16) NOT NULL,
-  `agama` enum('Islam','Kristen','Katholik','Hindu','Budha','Khonghucu') NOT NULL,
+  `agama` enum('Islam','Kristen','Khatolik','Hindu','Budha') NOT NULL,
   `alamat` varchar(255) NOT NULL,
   `status` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -7919,7 +7936,7 @@ CREATE TABLE `pengajuan` (
 CREATE TABLE `provinsi` (
   `id` varchar(2) NOT NULL,
   `name` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `provinsi`
@@ -7971,7 +7988,7 @@ CREATE TABLE `super_admin` (
   `superadmin_id` int(10) UNSIGNED NOT NULL,
   `username` varchar(45) NOT NULL,
   `super_admin_password` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -7980,16 +7997,22 @@ CREATE TABLE `super_admin` (
 --
 
 CREATE TABLE `user` (
-  `user_id` int(10) UNSIGNED NOT NULL,
+  `user_id` varchar(28) NOT NULL,
   `kelurahan_id` int(10) NOT NULL,
+  `token` text NOT NULL,
   `username` varchar(40) DEFAULT NULL,
-  `password` varchar(20) DEFAULT NULL,
-  `email` varchar(45) DEFAULT NULL,
   `nomor` varchar(15) DEFAULT NULL,
   `alamat` text DEFAULT NULL,
   `kota` varchar(100) DEFAULT NULL,
   `imageURL` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`user_id`, `kelurahan_id`, `token`, `username`, `nomor`, `alamat`, `kota`, `imageURL`) VALUES
+('Op3BDQqexfWKCBKZ674G0PciQM73', 1, 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjViNjAyZTBjYTFmNDdhOGViZmQxMTYwNGQ5Y2JmMDZmNGQ0NWY4MmIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbGF5YW5hbi13YXJnYSIsImF1ZCI6ImxheWFuYW4td2FyZ2EiLCJhdXRoX3RpbWUiOjE3MDY0MjgxMDcsInVzZXJfaWQiOiJPcDNCRFFxZXhmV0tDQktaNjc0RzBQY2lRTTczIiwic3ViIjoiT3AzQkRRcWV4ZldLQ0JLWjY3NEcwUGNpUU03MyIsImlhdCI6MTcwNjQyODEwNywiZXhwIjoxNzA2NDMxNzA3LCJlbWFpbCI6ImFuZGlrYWZhaXphdGFtYTA3QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbImFuZGlrYWZhaXphdGFtYTA3QGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.CiUAJe7aJaa-GobY9Y3PRpRYK4Ev9vh7-kkTqw5qbtF-cn80R0Z3QOJYxFxRaYr3AUc_Jz9pCu3KKZGavIVw7FunNf0vrLMIT1xZvojt3Bez4VVPQKJ2oMX21AdkE7j23-eScGQcN_bKUIDW9VnneGkC0P1XjIeU9c_bkGatptj3Sxsxu5IJXJa8xrypyosd7jsPvmRkfojRDBtP9nJSfFVQU1UpWEpw-8NFOyqULy-df_VCkZgm-WAC-x8cRCy4HoCNFWJsI71sIDCRomfyPtT63pkmgrNhZpM49q1LpPKf6G2ILxKcG1mNgm6MhgzDKc9rBPKnXeHE5GwvMvLxJw', 'Andika Risky Faizatama', '082136445690', 'dk.WIjang', 'Bloraaaa', NULL);
 
 --
 -- Indexes for dumped tables
@@ -8077,7 +8100,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `admin_kelurahan`
 --
 ALTER TABLE `admin_kelurahan`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `agenda`
@@ -8089,37 +8112,31 @@ ALTER TABLE `agenda`
 -- AUTO_INCREMENT for table `article`
 --
 ALTER TABLE `article`
-  MODIFY `article_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `article_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `kelurahan`
 --
 ALTER TABLE `kelurahan`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `laporan`
 --
 ALTER TABLE `laporan`
-  MODIFY `laporan_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `laporan_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pengajuan`
 --
 ALTER TABLE `pengajuan`
-  MODIFY `pengajuan_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `pengajuan_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `super_admin`
 --
 ALTER TABLE `super_admin`
   MODIFY `superadmin_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables

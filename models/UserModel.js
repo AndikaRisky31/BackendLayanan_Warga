@@ -4,11 +4,10 @@ import bcrypt from 'bcrypt';
 import { comparePasswords } from '../config/bcrypt-utils.js';
 
 export const createUser = async (body) => {
-  // Generate hashed password
-  const hashedPassword = await bcrypt.hash(body.password, 10); // 10 adalah jumlah putaran hashing
+  console.log(body);
 
-  const query = `INSERT INTO user (kelurahan_id, username, password, email, nomor, alamat, kota) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-  const values = [body.kelurahan_id, body.username, hashedPassword, body.email, body.nomor, body.alamat, body.kota];
+  const query = `INSERT INTO user (kelurahan_id, username, user_id, nomor, alamat, kota) VALUES (?, ?, ?, ?, ?, ?)`;
+  const values = [body.kelurahan_id, body.username, body.user_id,body.nomor, body.alamat, body.kota];
 
   try {
     const result = await db.execute(query, values);
@@ -79,3 +78,4 @@ export const deleteUser = async (id) => {
 
   return db.execute(query, [id]);
 }
+
