@@ -5,7 +5,7 @@ const router = express.Router();
 
 // Endpoint untuk login
 router.post('/login', AuthController.loginUser);
-router.post('/registerEmail',AuthController.registerStepOne);
-router.post('/registerDetail',AuthController.registerStepTwo)
+router.post('/register/email',AuthController.registerStepOne);
+router.post('/register/data',AuthController.registerStepTwo)
 
 export default router;

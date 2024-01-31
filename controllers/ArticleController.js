@@ -225,7 +225,7 @@ async function getImageResult(id) {
 }
 const getLatestArticles = async (req, res) => {
   try {
-    const { size } = req.body;
+    const { size } = req.params;
     const latestArticles = await ArticleModel.getLatestArticles(size);
     res.json(latestArticles);
   } catch (error) {

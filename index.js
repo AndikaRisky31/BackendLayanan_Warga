@@ -29,7 +29,7 @@ app.use(express.static("public"));
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/api',ArticleRoute);
-app.use(userRoutes);
+app.use('/api/users',userRoutes);
 app.use(pengajuanRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/agenda', agendaRoutes);

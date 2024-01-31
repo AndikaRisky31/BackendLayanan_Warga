@@ -14,46 +14,58 @@ firebaseAdmin.initializeApp({
 });
 
 export const registerStepOne = async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const { email, password } = req.body;
+    const userRecord = await firebaseAdmin.auth().getUserByEmail(email);
+    const UserId = userRecord.uid;
 
-    try {
-      // Cek apakah pengguna sudah terdaftar di Firebase
-      const userRecord = await firebaseAdmin.auth().getUserByEmail(email);
-      const UserId = userRecord.uid;
-      if (userRecord.emailVerified) {
-        res.status(201).json({ 
+    if (userRecord.emailVerified) {
+      const userLocal = await UserModel.getUserById(UserId);
+      console.log(userLocal);
+
+      if (userLocal) {
+        return res.status(409).json({ 
+          message: 'Email telah Terdaftar',
+          UserId
+        });
+      } else {
+        return res.status(201).json({ 
           message: 'Email telah diverifikasi, silahkan lengkapi data',
-          UserId:UserId });
-      } else {
-        // Email belum diverifikasi di Firebase
-        res.status(200).json({ 
-          message: 'Email belum diverifikasi, verifikasi email.',
-          UserId:UserId});
+          UserId 
+        });
       }
-    } catch (error) {
-      if (error.code === 'auth/user-not-found') {
-        // Create user in Firebase Authentication
-        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-        const user = userCredential.user;
-        const UserId = user.uid;
-
-        // Send email verification
-        await sendVerificationEmail(user);
-
-        res.status(200).json({ 
-          message: 'Registrasi tahap 1 berhasil. Periksa email Anda untuk verifikasi.',
-          UserId:UserId});
-      } else {
-        console.error('Terjadi kesalahan:', error);
-        res.status(500).json({ message: 'Terjadi kesalahan server.' });
-      }
+    } else {
+      // Email belum diverifikasi di Firebase
+      return res.status(200).json({ 
+        message: 'Email belum diverifikasi, verifikasi email.',
+        UserId 
+      });
     }
   } catch (error) {
     console.error('Terjadi kesalahan:', error);
-    res.status(500).json({ message: 'Terjadi kesalahan server.' });
+
+    let errorMessage = 'Terjadi kesalahan server.';
+
+    if (error.code === 'auth/user-not-found') {
+      // Create user in Firebase Authentication
+      const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+      const user = userCredential.user;
+      const UserId = user.uid;
+
+      // Send email verification
+      await sendVerificationEmail(user);
+
+      return res.status(201).json({ 
+        message: 'Registrasi tahap 1 berhasil. Periksa email Anda untuk verifikasi.',
+        UserId 
+      });
+    }
+
+    return res.status(500).json({ message: errorMessage });
   }
 };
+
 
 
 export const registerStepTwo = async (req, res) => {
@@ -109,12 +121,15 @@ const sendVerificationEmail = async (user) => {
 
 export const loginUser = async (req, res) => {
   try {
-    const {email,password} = req.body;
+    const {email,password,token} = req.body;
     const userRecord = await firebase.auth().signInWithEmailAndPassword(email, password);
     const user_id = userRecord.user.uid;
-    const idToken = await userRecord.user.getIdToken();
-    await AuthModel.updateToken(idToken,user_id);
-    res.status(200).json({ success: true, user_id, idToken });
+    
+    await AuthModel.updateToken(user_id,token);
+    const user = await AuthModel.getUserById(user_id);
+    user.email = email;
+    delete user.token;
+    res.status(200).json({ success: true,data:user });
   } catch (error) {
     console.error('Gagal melakukan login:', error.message);
     res.status(401).json({ success: false, error: error.message });

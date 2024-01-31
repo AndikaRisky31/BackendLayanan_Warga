@@ -130,11 +130,11 @@ export const login = async (req, res) => {
 export const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const [data] = await UserModel.getUserById(id);
     console.log("menerima request by id",id)
+    const data = await UserModel.getUserById(id);
     res.json({
       message: 'GET User By Id success',
-      data: data[0],
+      data
     });
   } catch (error) {
     res.status(500).json({
