@@ -1,18 +1,7 @@
 // AuthController.js
 import * as AuthModel from '../models/AuthModel.js';
 import * as UserModel from '../models/UserModel.js';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
-import firebaseAdmin from 'firebase-admin';
-import {serviceAccount} from '../config/firebaseConfig.js';
-
-
-// Inisialisasi Firebase Admin SDK
-firebaseAdmin.initializeApp({
-  credential: firebaseAdmin.credential.cert(serviceAccount),
-});
-
+import {auth, firestore, firebaseAdmin,firebaseAuth} from '../config/firebaseConfig.js';
 export const registerStepOne = async (req, res) => {
   const { email, password } = req.body;
 
@@ -49,7 +38,7 @@ export const registerStepOne = async (req, res) => {
 
     if (error.code === 'auth/user-not-found') {
       // Create user in Firebase Authentication
-      const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+      const userCredential = await firebaseAuth.createUserWithEmailAndPassword(auth,email, password);
       const user = userCredential.user;
       const UserId = user.uid;
 
@@ -101,7 +90,7 @@ export const resendVerificationEmail = async (req, res) => {
   const { email } = req.body;
 
   try {
-    const existingUser = await firebase.auth().getUserByEmail(email);
+    const existingUser = await firebaseAuth.getUserByEmail(email);
     if (existingUser) { 
       await sendVerificationEmail(user);
       res.status(200).json({ message: 'Email verifikasi dikirim ulang. Periksa email Anda.' });
@@ -116,19 +105,21 @@ export const resendVerificationEmail = async (req, res) => {
 
 // Function to send verification email
 const sendVerificationEmail = async (user) => {
-  await user.sendEmailVerification();
+  await user.sendEmailVerification(auth);
 };
 
 export const loginUser = async (req, res) => {
   try {
-    const {email,password,token} = req.body;
-    const userRecord = await firebase.auth().signInWithEmailAndPassword(email, password);
+    const {email,password,tokenFCM} = req.body;
+    const userRecord = await firebaseAuth.signInWithEmailAndPassword(auth,email, password);
     const user_id = userRecord.user.uid;
     
-    await AuthModel.updateToken(user_id,token);
+    await AuthModel.updateToken(user_id,tokenFCM);
     const user = await AuthModel.getUserById(user_id);
     user.email = email;
-    delete user.token;
+    user.token = await userRecord.user.getIdToken();
+
+    delete user.tokenFCM;
     res.status(200).json({ success: true,data:user });
   } catch (error) {
     console.error('Gagal melakukan login:', error.message);

@@ -1,8 +1,7 @@
 // UserController.js
 import * as UserModel from '../models/UserModel.js';
 import bcrypt from 'bcrypt';
-import firebase from 'firebase/compat/app';
-import 'firebase/auth';
+
 
 const saltRounds = 10;
 
@@ -132,6 +131,7 @@ export const getUserById = async (req, res) => {
     const { id } = req.params;
     console.log("menerima request by id",id)
     const data = await UserModel.getUserById(id);
+    data.email = await admin.auth().getUser(uid);
     res.json({
       message: 'GET User By Id success',
       data

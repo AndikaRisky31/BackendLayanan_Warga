@@ -1,7 +1,5 @@
 // UserModel.js
 import { db } from '../config/Database.js';
-import bcrypt from 'bcrypt';
-import { comparePasswords } from '../config/bcrypt-utils.js';
 
 export const createUser = async (body) => {
   console.log(body);

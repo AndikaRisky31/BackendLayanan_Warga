@@ -1,4 +1,8 @@
 import { initializeApp } from "firebase/app";
+import * as firebaseAuth from 'firebase/auth';
+import { getFirestore } from "firebase/firestore";
+import firebaseAdmin from "firebase-admin";
+
 export const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -10,10 +14,10 @@ export const firebaseConfig = {
 };
 
 export const serviceAccount = {
-  type : process.env.FIREBASE_TYPE,
-  project_id : process.env.FIREBASE_PROJECT_ID,
+  type: process.env.FIREBASE_TYPE,
+  project_id: process.env.FIREBASE_PROJECT_ID,
   private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
-  private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n').trim(),
+  private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n").trim(),
   client_email: process.env.FIREBASE_CLIENT_EMAIL,
   client_id: process.env.FIREBASE_CLIENT_ID,
   auth_uri: process.env.FIREBASE_AUTH_URI,
@@ -23,4 +27,11 @@ export const serviceAccount = {
 };
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+firebaseAdmin.initializeApp({
+  credential: firebaseAdmin.credential.cert(serviceAccount),
+});
+const app = initializeApp(firebaseConfig);
+const auth = firebaseAuth.getAuth(app);
+const firestore = getFirestore(app);
+
+export { auth, firestore, firebaseAdmin,firebaseAuth };
